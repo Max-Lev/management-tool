@@ -1,0 +1,8 @@
+<section class="container">
+    <div>
+        {{title}}
+    </div>
+    <ng-container *ngFor="let svg of svgIcons">
+        <app-svg-icon [svgIcon]="svg.path"></app-svg-icon>
+    </ng-container>
+</section>
