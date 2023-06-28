@@ -13,7 +13,7 @@ const path_1 = require("path");
 let ConfigService = class ConfigService {
     getDefaultConfig() {
         const file = (0, fs_1.createReadStream)((0, path_1.join)(process.cwd(), 'db/svg-icons.json'));
-        console.log('file ', file);
+        console.log('file:', file);
         return file;
     }
     create(createConfigDto) {

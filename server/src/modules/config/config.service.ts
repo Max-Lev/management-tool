@@ -4,17 +4,14 @@ import { createReadStream } from 'fs';
 import { join } from 'path';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
+import { SVG_ICONS } from 'db/svg-icons';
+import { IconsConfig } from './entities/config.entity';
 
 @Injectable()
 export class ConfigService {
 
-  getDefaultConfig() {
-    const file = createReadStream(join(process.cwd(), 'db/svg-icons.json'));
-    console.log('file:',file)
-    return file;
-    // return [{
-    //   name:'Max'
-    // }]
+  async getSvgIcons(): Promise<IconsConfig[]> {
+    return SVG_ICONS;
   }
 
   create(createConfigDto: CreateConfigDto) {

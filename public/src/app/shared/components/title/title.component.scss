@@ -1,0 +1,25 @@
+:host {
+    display: flex;
+    width: 100%;
+    border:1px solid red;
+    .container {
+        display: flex;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .title,
+        .icons {
+            display: flex;
+            flex: 1;
+        }
+
+        .title {
+            font-family: 'Helvetica Neue,Medium';
+        }
+
+        .icons {
+            justify-content: right;
+        }
+    }
+}

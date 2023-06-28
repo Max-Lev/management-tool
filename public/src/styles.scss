@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Helvetica Neue,Medium';
+    src: url('./assets/fonts/HelveticaNeue\ Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Helvetica Neue,Thin';
+    src: url('./assets/fonts/HelveticaNeue-Thin.otf');
+}
+
+body {
+    font-family: 'Helvetica Neue,Thin';
+
+}

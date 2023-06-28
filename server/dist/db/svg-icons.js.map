@@ -1,0 +1,1 @@
+{"version":3,"file":"svg-icons.js","sourceRoot":"","sources":["../../db/svg-icons.ts"],"names":[],"mappings":";;;AAAa,QAAA,SAAS,GAClB;IACI;QACI,MAAM,EAAE,KAAK;QACb,IAAI,EAAE,8BAA8B;KACvC;IACD;QACI,MAAM,EAAE,MAAM;QACd,IAAI,EAAE,6BAA6B;KACtC;IACD;QACI,MAAM,EAAE,OAAO;QACf,IAAI,EAAE,8BAA8B;KACvC;CACJ,CAAA"}

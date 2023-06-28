@@ -1,8 +1,10 @@
 <section class="container">
-    <div>
+    <div class="title">
         {{title}}
     </div>
-    <ng-container *ngFor="let svg of svgIcons">
-        <app-svg-icon [svgIcon]="svg.path"></app-svg-icon>
-    </ng-container>
+    <div class="icons">
+        <ng-container *ngFor="let svg of svgIcons$ | async">
+            <app-svg-icon (click)="modeAction(svg)" [svgIcon]="svg.path"></app-svg-icon>
+        </ng-container>
+    </div>
 </section>

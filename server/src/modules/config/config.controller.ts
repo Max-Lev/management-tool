@@ -7,9 +7,9 @@ import { UpdateConfigDto } from './dto/update-config.dto';
 export class ConfigController {
   constructor(private readonly configService: ConfigService) { }
 
-  @Get()
-  defaultConfig() {
-    return this.configService.getDefaultConfig();
+  @Get('icons')
+  svgIcons() {
+    return this.configService.getSvgIcons();
   }
 
   @Post()
