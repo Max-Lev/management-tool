@@ -6,12 +6,20 @@ import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
 import { SVG_ICONS } from 'db/svg-icons';
 import { IconsConfig } from './entities/config.entity';
+import { COLS, Column } from 'db/columns';
+import { IProducts, PRODUCTS } from 'db/products';
 
 @Injectable()
 export class ConfigService {
 
   async getSvgIcons(): Promise<IconsConfig[]> {
     return SVG_ICONS;
+  }
+  async getColumns(): Promise<Column[]> {
+    return COLS;
+  }
+  async getProducts(): Promise<IProducts[]> {
+    return PRODUCTS;
   }
 
   create(createConfigDto: CreateConfigDto) {

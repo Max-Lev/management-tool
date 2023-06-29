@@ -11,6 +11,14 @@ export class ConfigController {
   svgIcons() {
     return this.configService.getSvgIcons();
   }
+  @Get('columns')
+  columns() {
+    return this.configService.getColumns();
+  }
+  @Get('products')
+  products() {
+    return this.configService.getProducts();
+  }
 
   @Post()
   create(@Body() createConfigDto: CreateConfigDto) {

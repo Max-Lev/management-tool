@@ -1,4 +1,9 @@
 :host {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    margin: 1rem;
+
     .container {
         display: flex;
         width: 100%;

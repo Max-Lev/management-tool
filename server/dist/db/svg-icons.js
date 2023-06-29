@@ -1,17 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SVG_ICONS = void 0;
+exports.SVG_ICONS = exports.MODE_TYPE_ENUM = void 0;
+var MODE_TYPE_ENUM;
+(function (MODE_TYPE_ENUM) {
+    MODE_TYPE_ENUM["LIST"] = "[MODE] LIST";
+    MODE_TYPE_ENUM["TILES"] = "[MODE] TILES";
+    MODE_TYPE_ENUM["ADD"] = "[MODE] ADD";
+    MODE_TYPE_ENUM["INITIAL"] = "[MODE] INITIAL";
+})(MODE_TYPE_ENUM = exports.MODE_TYPE_ENUM || (exports.MODE_TYPE_ENUM = {}));
 exports.SVG_ICONS = [
     {
-        action: "New",
+        name: "New",
+        action: MODE_TYPE_ENUM.ADD,
         path: "../assets/svg/create-new.svg"
     },
     {
-        action: "List",
+        name: "List",
+        action: MODE_TYPE_ENUM.LIST,
         path: "../assets/svg/list-mode.svg"
     },
     {
-        action: "Tiles",
+        name: "Tiles",
+        action: MODE_TYPE_ENUM.TILES,
         path: "../assets/svg/tiles-mode.svg"
     }
 ];

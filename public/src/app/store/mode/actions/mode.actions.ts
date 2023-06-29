@@ -6,15 +6,21 @@ export enum MODE_TYPE_ENUM {
   ADD = '[MODE] ADD',
   INITIAL = '[MODE] INITIAL',
 }
-// export const increment = createAction('[Counter Component] Increment');
-// export const decrement = createAction('[Counter Component] Decrement');
-// export const reset = createAction('[Counter Component] Reset');
 
-export const INITIAL_MODE_ACTION = createAction(MODE_TYPE_ENUM.LIST);
-export const List_MODE_ACTION = createAction(MODE_TYPE_ENUM.LIST);
-export const Tiles_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES);
-export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD, props<{ payload: unknown }>());
+export const INITIAL_MODE_ACTION = createAction(MODE_TYPE_ENUM.INITIAL);
 
+export const List_MODE_ACTION = createAction(MODE_TYPE_ENUM.LIST,
+  props<{ payload: { modeType: MODE_TYPE_ENUM.LIST } }>());
+
+export const Tiles_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
+  props<{ payload: { modeType: MODE_TYPE_ENUM.TILES } }>());
+
+export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD,
+  props<{ payload: { modeType: MODE_TYPE_ENUM.ADD } }>());
+
+
+
+  
 export const ModeActions = createActionGroup({
   source: 'Mode',
   events: {

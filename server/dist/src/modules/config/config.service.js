@@ -9,9 +9,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigService = void 0;
 const common_1 = require("@nestjs/common");
 const svg_icons_1 = require("../../../db/svg-icons");
+const columns_1 = require("../../../db/columns");
+const products_1 = require("../../../db/products");
 let ConfigService = class ConfigService {
     async getSvgIcons() {
         return svg_icons_1.SVG_ICONS;
+    }
+    async getColumns() {
+        return columns_1.COLS;
+    }
+    async getProducts() {
+        return products_1.PRODUCTS;
     }
     create(createConfigDto) {
         return 'This action adds a new config';

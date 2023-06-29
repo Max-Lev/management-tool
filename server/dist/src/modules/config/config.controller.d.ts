@@ -5,6 +5,8 @@ export declare class ConfigController {
     private readonly configService;
     constructor(configService: ConfigService);
     svgIcons(): Promise<import("./entities/config.entity").IconsConfig[]>;
+    columns(): Promise<import("../../../db/columns").Column[]>;
+    products(): Promise<import("../../../db/products").IProducts[]>;
     create(createConfigDto: CreateConfigDto): string;
     findAll(): string;
     findOne(id: string): string;

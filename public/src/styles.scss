@@ -1,4 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+
+// "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+//               "node_modules/primeng/resources/primeng.min.css",
 @font-face {
     font-family: 'Helvetica Neue,Medium';
     src: url('./assets/fonts/HelveticaNeue\ Medium.ttf');
@@ -8,8 +13,30 @@
     font-family: 'Helvetica Neue,Thin';
     src: url('./assets/fonts/HelveticaNeue-Thin.otf');
 }
+@font-face {
+    font-family: 'Helvetica Neue,Light';
+    src: url('./assets/fonts/HelveticaNeue\ Light.ttf');
+}
+@font-face {
+    font-family: 'Helvetica Neue,Regular';
+    src: url('./assets/fonts/HelveticaNeue\ Regular.ttf');
+}
 
 body {
     font-family: 'Helvetica Neue,Thin';
+    background: #F2F6F9 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
 
+p-datatable-header,
+p-table .p-datatable-tbody>tr>td {
+    font-family: 'Helvetica Neue,Light';
+    color:#797979;
+    font-size: 14px;
+}
+
+p-table .p-datatable-thead>tr>th {
+    font-family: 'Helvetica Neue,Medium';
+    font-weight: bold;
+    font-size: 12px;
 }

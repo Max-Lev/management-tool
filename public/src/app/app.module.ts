@@ -9,6 +9,9 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { reducers, metaReducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CustomKeyValuePipe } from './shared/pipes/custom-key-value.pipe';
+import { EffectsModule } from '@ngrx/effects';
+import { ConfigEffects } from './store/effects/config.effects';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,6 +25,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     CoreModule,
     ButtonModule,
     StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot(),
     // isDevMode() ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [],

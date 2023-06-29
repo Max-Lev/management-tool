@@ -7,13 +7,16 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { ModeReducer, ModeState } from '../mode/reducers/mode.reducer';
+import { ProductsReducer, ProductsState } from '../mode/reducers/products.reducer';
 
 export interface ManagementState {
-  modeState: ModeState
+  modeState: ModeState,
+  productsState: ProductsState
 }
 
 export const reducers: ActionReducerMap<ManagementState> = {
-  modeState: ModeReducer
+  modeState: ModeReducer,
+  productsState: ProductsReducer
 };
 
 

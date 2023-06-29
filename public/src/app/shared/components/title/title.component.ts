@@ -30,7 +30,7 @@ export class TitleComponent {
   modeAction(svg: IconsConfig) {
     console.log(svg);
     console.log(this.store);
-    this.store.dispatch<Action>(ADD_MODE_ACTION({ payload: { name: "Max" } }));
+    this.store.dispatch<Action>(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
   }
 
 }

@@ -2,5 +2,7 @@ const server = 'http://localhost:3000';
 
 export const environment = {
     production: false,
-    getIconsConfig: `${server}/config/icons`
+    iconsConfig: `${server}/config/icons`,
+    columns: `${server}/config/columns`,
+    products: `${server}/config/products`
 };

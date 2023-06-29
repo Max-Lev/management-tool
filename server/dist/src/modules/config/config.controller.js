@@ -24,6 +24,12 @@ let ConfigController = class ConfigController {
     svgIcons() {
         return this.configService.getSvgIcons();
     }
+    columns() {
+        return this.configService.getColumns();
+    }
+    products() {
+        return this.configService.getProducts();
+    }
     create(createConfigDto) {
         return this.configService.create(createConfigDto);
     }
@@ -46,6 +52,18 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ConfigController.prototype, "svgIcons", null);
+__decorate([
+    (0, common_1.Get)('columns'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ConfigController.prototype, "columns", null);
+__decorate([
+    (0, common_1.Get)('products'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ConfigController.prototype, "products", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

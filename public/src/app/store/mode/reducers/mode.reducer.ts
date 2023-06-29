@@ -22,15 +22,18 @@ export const addState: ModeState = {
 
 export const ModeReducer = createReducer(
   initialState,
-  on(List_MODE_ACTION, (state: ModeState) => {
+  on(List_MODE_ACTION, (state: ModeState, action: { payload: { modeType: MODE_TYPE_ENUM } }) => {
     debugger;
-    return { ...state };
+    console.log(state, action)
+    return { ...state, ...action };
   }),
-  on(Tiles_MODE_ACTION, (state: ModeState) => {
+  on(Tiles_MODE_ACTION, (state: ModeState, 
+    action: { payload: { modeType: MODE_TYPE_ENUM } }) => {
     debugger;
-    return { ...state };
+    console.log(state, action)
+    return { ...state, ...action };
   }),
-  on(ADD_MODE_ACTION, (state: ModeState, action: any) => {
+  on(ADD_MODE_ACTION, (state: ModeState, action: { payload: { modeType: MODE_TYPE_ENUM } }) => {
     debugger;
     console.log(state, action)
     return { ...state, ...action };
