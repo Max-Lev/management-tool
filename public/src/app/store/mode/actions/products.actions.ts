@@ -1,5 +1,5 @@
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
-import { IProducts } from 'src/app/modules/list-view/models/products.model';
+import { IColumn, IProducts } from 'src/app/modules/list-view/models/products.model';
 
 export const ProductsActions = createActionGroup({
   source: 'Products',
@@ -16,7 +16,7 @@ export const getProductsSuccessAction = createAction(
   props<{ payload: IProducts[] }>()
 );
 
-export const getPostsFailureAction = createAction(
+export const getProductsFailureAction = createAction(
   'Load Products Failure',
   props<{ payload: { error: string } }>()
 );

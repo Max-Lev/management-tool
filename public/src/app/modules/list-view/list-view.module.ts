@@ -10,6 +10,8 @@ import { ConfigEffects } from 'src/app/store/effects/config.effects';
 import { StoreModule } from '@ngrx/store';
 import { ProductsReducer } from 'src/app/store/mode/reducers/products.reducer';
 import { reducers } from 'src/app/store/reducers';
+import { ProductsService } from './providers/products.service';
+// import { Res } from './resolvers/products.resolver';
 
 
 @NgModule({
@@ -25,8 +27,16 @@ import { reducers } from 'src/app/store/reducers';
     // StoreModule.forFeature('productsReducer', ProductsReducer),
     // StoreModule.forFeature({reducers}),
     // EffectsModule.forRoot([ConfigEffects]),
-    EffectsModule.forFeature([ConfigEffects])
+    EffectsModule.forFeature([
+      ProductsService,
+      // ConfigEffects
+    ])
     // EffectsModule.forRoot([ConfigEffects]),
+  ],
+  providers: [
+    // ProductsService,
+    ConfigEffects
+    // Res
   ]
 })
 export class ListViewModule { }

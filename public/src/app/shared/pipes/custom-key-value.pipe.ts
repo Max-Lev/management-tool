@@ -21,7 +21,6 @@ export class CustomKeyValuePipe implements PipeTransform {
       data.push(item);
       return prev;
     }, values);
-    console.log(data)
     return data;
   }
 

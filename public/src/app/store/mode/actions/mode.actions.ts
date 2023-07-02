@@ -1,3 +1,4 @@
+import { ofType } from '@ngrx/effects';
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
 
 export enum MODE_TYPE_ENUM {
@@ -9,10 +10,10 @@ export enum MODE_TYPE_ENUM {
 
 export const INITIAL_MODE_ACTION = createAction(MODE_TYPE_ENUM.INITIAL);
 
-export const List_MODE_ACTION = createAction(MODE_TYPE_ENUM.LIST,
+export const LIST_MODE_ACTION = createAction(MODE_TYPE_ENUM.LIST,
   props<{ payload: { modeType: MODE_TYPE_ENUM.LIST } }>());
 
-export const Tiles_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
+export const TILES_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
   props<{ payload: { modeType: MODE_TYPE_ENUM.TILES } }>());
 
 export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD,
