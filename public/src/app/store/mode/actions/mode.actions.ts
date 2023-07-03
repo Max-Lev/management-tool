@@ -5,6 +5,7 @@ export enum MODE_TYPE_ENUM {
   LIST = '[MODE] LIST',
   TILES = '[MODE] TILES',
   ADD = '[MODE] ADD',
+  HIDE = '[MODE] HIDE',
   INITIAL = '[MODE] INITIAL',
 }
 
@@ -18,6 +19,9 @@ export const TILES_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
 
 export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD,
   props<{ payload: { modeType: MODE_TYPE_ENUM.ADD } }>());
+
+export const HIDE_MODE_ACTION = createAction(MODE_TYPE_ENUM.HIDE,
+  props<{ payload: { modeType: MODE_TYPE_ENUM.HIDE } }>());
 
 
 

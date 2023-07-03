@@ -25,3 +25,7 @@
     </ng-template>
 
 </p-table>
+
+<p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="hide()">
+    <app-side-panel></app-side-panel>
+</p-sidebar>

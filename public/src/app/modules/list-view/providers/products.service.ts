@@ -40,15 +40,10 @@ export class ProductsService {
   }
 
   resolve$() {
-    // debugger;
+
     this.store.dispatch(LoadPrdoductsAction());
-    // setTimeout(() => {
-      this.store.dispatch(ColumnsActions.loadColumns());
-    // }, 5000);
-    // return forkJoin([this.prods$, this.cols$,]).subscribe(s => {
-    //   debugger;
-    // })
-    
+    this.store.dispatch(ColumnsActions.loadColumns());
+
   }
 
   prods$ = createEffect(() =>

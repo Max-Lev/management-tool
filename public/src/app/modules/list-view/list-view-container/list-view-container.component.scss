@@ -1,10 +1,20 @@
 :host {
 
-    // .ui-datatable-header,
-    // .ui-datatable thead th .ui-column-title {
-    //     font-family: 'Helvetica Neue,Thin';
-    //     color:red;
-    // }
+    ::ng-deep {
+        p-table {
+            .p-datatable.p-component {
+                .p-datatable-wrapper {
+                    tabel {
+                        border-spacing: 0 1rem;
+                    }
+                }
 
+            }
+        }
+
+        .p-datatable-table {
+            border-spacing: 0 1rem;
+        }
+    }
 
 }

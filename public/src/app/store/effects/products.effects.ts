@@ -12,7 +12,7 @@ import { ColumnsActions } from '../mode/actions/columns.actions';
 
 
 @Injectable()
-export class ConfigEffects {
+export class ProductsEffects {
 
 
   constructor(private actions$: Actions,

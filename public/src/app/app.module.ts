@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -9,9 +9,8 @@ import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { reducers, metaReducers } from './store/reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { CustomKeyValuePipe } from './shared/pipes/custom-key-value.pipe';
 import { EffectsModule } from '@ngrx/effects';
-import { ConfigEffects } from './store/effects/config.effects';
+// import { SidebarModule } from 'primeng/sidebar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,13 +19,16 @@ import { ConfigEffects } from './store/effects/config.effects';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    // StoreModule.forRoot({}, {}),
+    // SidebarModule,
     SharedModule,
     CoreModule,
     ButtonModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot(),
-    // isDevMode() ? StoreDevtoolsModule.instrument() : []
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      // logOnly: environment.production, // Restrict extension to log-only mode
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

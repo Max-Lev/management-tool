@@ -18,12 +18,4 @@ export class ConfigService {
     return this.httpClient.get<IconsConfig[]>(environment.iconsConfig)
   }
 
-  // getColumns$(): Observable<IColumn[]> {
-  //   return this.httpClient.get<IColumn[]>(environment.columns)
-  // }
-
-  // getProducts$(): Observable<IProducts[]> {
-  //   return this.httpClient.get<IProducts[]>(environment.products)
-  // }
-
 }

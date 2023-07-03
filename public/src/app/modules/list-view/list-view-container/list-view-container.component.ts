@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { IColumn, IProducts } from '../models/products.model';
-import { CustomKeyValuePipe } from 'src/app/shared/pipes/custom-key-value.pipe';
-import { Observable, map } from 'rxjs';
-import { ConfigEffects } from 'src/app/store/effects/config.effects';
+import { Observable } from 'rxjs';
+import { ProductsEffects } from 'src/app/store/effects/products.effects';
 import { ManagementState } from 'src/app/store/reducers';
 import { Store, select } from '@ngrx/store';
-import { ProductsActions, LoadPrdoductsAction } from 'src/app/store/mode/actions/products.actions';
 import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
-import { ProductsState } from 'src/app/store/mode/reducers/products.reducer';
 import { ProductsService } from '../providers/products.service';
-import { ColumnsActions } from 'src/app/store/mode/actions/columns.actions';
 import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
+import { ADD_MODE_ACTION, HIDE_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
+import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
+import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
 
 
 @Component({
@@ -26,30 +25,53 @@ export class ListViewContainerComponent implements OnInit {
 
   cols: Observable<IColumn[]>;
 
+  modeState$: Observable<ModeState>;
+
+  sidebarVisible: boolean = false;
+
   constructor(private productsService: ProductsService,
     private store: Store<ManagementState>,
-    private configEffects: ConfigEffects) {
+    private configEffects: ProductsEffects) {
+    this.modeState$ = this.store.pipe(select(selectModeState));
 
   }
   ngOnInit(): void {
-    // this.cols = this.productsService.getColumns$();
-
-    // this.store.dispatch(LoadPrdoductsAction());
-    // this.store.dispatch(ColumnsActions.loadColumns());
-
-
-    this.store.pipe(select(productsStateSelector)).subscribe((productsState: IProducts[]) => {
-      debugger;
-      this.products = productsState;
-    });
-    this.cols = this.store.pipe(select(columnsstateSelector));
-    // .subscribe((columns: IColumn[]) => {
-    //   this.cols = columns;
-    // });
-
+    this.setColumns$();
+    this.setProducts$();
+    this.toggleSideBar();
+    this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }))
     this.store.subscribe((state: ManagementState) => {
       console.log('ManagementState ', state);
-    })
+    });
 
   }
+
+
+  hide() {
+    this.store.dispatch(HIDE_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.HIDE } }))
+    console.log('hide')
+  }
+
+
+  private toggleSideBar() {
+    this.modeState$.subscribe((modeState: ModeState) => {
+      console.log('ModeState ', modeState);
+      if (modeState.type === MODE_TYPE_ENUM.ADD) {
+        this.sidebarVisible = true;
+      } else {
+        this.sidebarVisible = false;
+      }
+    });
+  }
+
+  private setProducts$() {
+    this.store.pipe(select(productsStateSelector)).subscribe((productsState: IProducts[]) => {
+      this.products = productsState;
+    });
+  }
+
+  private setColumns$() {
+    this.cols = this.store.pipe(select(columnsstateSelector));
+  }
+
 }
