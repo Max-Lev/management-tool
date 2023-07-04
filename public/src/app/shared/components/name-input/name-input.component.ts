@@ -1,5 +1,5 @@
 import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-name-input',
@@ -10,30 +10,52 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => NameInputComponent),
       multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => NameInputComponent),
+      multi: true
     }
   ],
 })
-export class NameInputComponent implements ControlValueAccessor {
+export class NameInputComponent implements ControlValueAccessor,Validator {
 
-  name: string = '';
+  event: string = '';
 
   constructor() {
 
   }
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    if(control.valid){
+      return null;
+    }
+    return control.errors;
+  }
+  
+  registerOnValidatorChange?(fn: () => void): void {
+    
+  }
 
-  private onChangeCallback: (_: any) => void = (_: any) => { };
+  private onChangeCallback: (_: any) => void = () => { };
 
-  onChange(val: any) { this.onChangeCallback(val); }
+  onChange(val: any) { 
+    // this.writeValue(val);
+    this.onChangeCallback(val); 
+  }
 
   // ControlValueAccessor Interface
-  writeValue(value: any) { console.log('writeValue ', value); }
+  writeValue(value: any) {
+    this.event = value;
+  }
 
   // ControlValueAccessor Interface
-  registerOnChange(fn: any) { this.onChangeCallback = fn; }
+  registerOnChange(fn: any) { this.onChange = fn; }
 
   // ControlValueAccessor Interface
-  registerOnTouched(fn: any) { }
+  registerOnTouched(fn: any) {
+    this.onChangeCallback = fn;
+  }
 
-  setDisabledState?(isDisabled: boolean): void { }
+  // setDisabledState?(isDisabled: boolean): void { }
 
 }

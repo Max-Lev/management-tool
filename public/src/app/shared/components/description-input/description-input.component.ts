@@ -1,5 +1,6 @@
 import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
+import { retryWhen } from 'rxjs';
 
 @Component({
   selector: 'app-description-input',
@@ -10,10 +11,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DescriptionInputComponent),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => DescriptionInputComponent),
+      multi: true
     }
   ]
 })
-export class DescriptionInputComponent implements ControlValueAccessor {
+export class DescriptionInputComponent implements ControlValueAccessor, Validator {
 
   value: string = '';
 
@@ -22,6 +28,13 @@ export class DescriptionInputComponent implements ControlValueAccessor {
   constructor() {
 
   }
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    if (control.valid) {
+      return null;
+    }
+    return control.errors;
+  }
+  registerOnValidatorChange?(fn: () => void): void { }
 
   change(value: string) {
     this.onChangeCallback(this.value);
@@ -29,7 +42,7 @@ export class DescriptionInputComponent implements ControlValueAccessor {
 
   writeValue(obj: any): void { this.onChangeCallback(obj); }
 
-  registerOnChange(fn: any): void { this.onChangeCallback = fn; }
+  registerOnChange(fn: any): void { this.change = fn; }
 
   registerOnTouched(fn: any): void { }
 

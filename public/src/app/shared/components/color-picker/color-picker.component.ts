@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 import { ColorPickerChangeEvent } from 'primeng/colorpicker';
 
 @Component({
@@ -11,40 +11,55 @@ import { ColorPickerChangeEvent } from 'primeng/colorpicker';
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => ColorPickerComponent),
       multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => ColorPickerComponent),
+      multi: true
     }
   ]
 })
-export class ColorPickerComponent implements ControlValueAccessor,
+export class ColorPickerComponent implements ControlValueAccessor, Validator,
   AfterViewInit {
 
-  color: any;
+  color: string = '#ffffff';
 
   private onChangeCallback: (_: any) => void = () => { };
+
+  // onTouchedCallback: () => void = () => {};
+  onTouched = () => {};
 
   @ViewChild(ColorPickerComponent) colorPicker: ColorPickerComponent;
 
   constructor() {
 
   }
+
   ngAfterViewInit(): void {
     console.log(this.colorPicker)
   }
 
-  onChange(value: ColorPickerChangeEvent): void {
-    this.onChangeCallback(this.color);
+  onChange(value: string): void { this.onChangeCallback(value); }
+
+  writeValue(obj: any): void { }
+
+  registerOnChange(fn: any): void { this.onChange = fn; }
+
+  registerOnTouched(fn: any): void { 
+    this.onTouched = fn;
   }
 
-  writeValue(obj: any): void {
+  setDisabledState?(isDisabled: boolean): void { }
 
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    this.onTouched();
+    if (control.valid && control.touched) {
+      return null;
+    }
+    return control.errors;
   }
-  registerOnChange(fn: any): void {
-    this.onChangeCallback = fn;
-  }
-  registerOnTouched(fn: any): void {
 
-  }
-  setDisabledState?(isDisabled: boolean): void {
+  registerOnValidatorChange?(fn: () => void): void { }
 
-  }
 
 }
