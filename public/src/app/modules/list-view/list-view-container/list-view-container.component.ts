@@ -7,7 +7,7 @@ import { Store, select } from '@ngrx/store';
 import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
 import { ProductsService } from '../providers/products.service';
 import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
-import { ADD_MODE_ACTION, HIDE_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
+import { ADD_MODE_ACTION, CLOSE_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
 import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
 import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
 
@@ -48,7 +48,7 @@ export class ListViewContainerComponent implements OnInit {
 
 
   hide() {
-    this.store.dispatch(HIDE_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.HIDE } }))
+    this.store.dispatch(CLOSE_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.CLOSE } }))
     console.log('hide')
   }
 
@@ -72,6 +72,12 @@ export class ListViewContainerComponent implements OnInit {
 
   private setColumns$() {
     this.cols = this.store.pipe(select(columnsstateSelector));
+  }
+
+  cancelEventHandler(action:boolean){
+    if(action===false){
+      this.hide();
+    }
   }
 
 }

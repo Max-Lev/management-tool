@@ -5,8 +5,9 @@ export enum MODE_TYPE_ENUM {
   LIST = '[MODE] LIST',
   TILES = '[MODE] TILES',
   ADD = '[MODE] ADD',
-  HIDE = '[MODE] HIDE',
+  CLOSE = '[MODE] CLOSE',
   INITIAL = '[MODE] INITIAL',
+  SAVE = '[MODE] SAVE',
 }
 
 export const INITIAL_MODE_ACTION = createAction(MODE_TYPE_ENUM.INITIAL);
@@ -20,12 +21,15 @@ export const TILES_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
 export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD,
   props<{ payload: { modeType: MODE_TYPE_ENUM.ADD } }>());
 
-export const HIDE_MODE_ACTION = createAction(MODE_TYPE_ENUM.HIDE,
-  props<{ payload: { modeType: MODE_TYPE_ENUM.HIDE } }>());
+export const CLOSE_MODE_ACTION = createAction(MODE_TYPE_ENUM.CLOSE,
+  props<{ payload: { modeType: MODE_TYPE_ENUM.CLOSE } }>());
+
+export const SAVE_MODE_ACTION = createAction(MODE_TYPE_ENUM.CLOSE,
+  props<{ payload: {} }>());
 
 
 
-  
+
 export const ModeActions = createActionGroup({
   source: 'Mode',
   events: {

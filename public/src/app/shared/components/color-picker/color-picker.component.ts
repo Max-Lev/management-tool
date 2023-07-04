@@ -31,8 +31,6 @@ export class ColorPickerComponent implements ControlValueAccessor,
   }
 
   onChange(value: ColorPickerChangeEvent): void {
-    console.log(value)
-    console.log(this.color);
     this.onChangeCallback(this.color);
   }
 
@@ -40,7 +38,6 @@ export class ColorPickerComponent implements ControlValueAccessor,
 
   }
   registerOnChange(fn: any): void {
-    console.log(fn)
     this.onChangeCallback = fn;
   }
   registerOnTouched(fn: any): void {

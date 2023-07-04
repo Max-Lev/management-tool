@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 
 // "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
 //               "node_modules/primeng/resources/primeng.min.css",
@@ -13,10 +14,12 @@
     font-family: 'Helvetica Neue,Thin';
     src: url('./assets/fonts/HelveticaNeue-Thin.otf');
 }
+
 @font-face {
     font-family: 'Helvetica Neue,Light';
     src: url('./assets/fonts/HelveticaNeue\ Light.ttf');
 }
+
 @font-face {
     font-family: 'Helvetica Neue,Regular';
     src: url('./assets/fonts/HelveticaNeue\ Regular.ttf');
@@ -31,7 +34,7 @@ body {
 p-datatable-header,
 p-table .p-datatable-tbody>tr>td {
     font-family: 'Helvetica Neue,Light';
-    color:#797979;
+    color: #797979;
     font-size: 14px;
 }
 
@@ -39,4 +42,16 @@ p-table .p-datatable-thead>tr>th {
     font-family: 'Helvetica Neue,Medium';
     font-weight: bold;
     font-size: 12px;
+}
+
+.label {
+    font-size: 14px;
+    font-family: 'Helvetica Neue,Medium';
+    padding-bottom: 10px;
+}
+
+
+button .p-button-label {
+    font-size: 14px;
+    font-family: 'Helvetica Neue,Light';
 }

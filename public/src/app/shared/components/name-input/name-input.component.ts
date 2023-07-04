@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -21,32 +21,19 @@ export class NameInputComponent implements ControlValueAccessor {
 
   }
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = (_:any) => {
-    console.log(_);
-  };
+  private onChangeCallback: (_: any) => void = (_: any) => { };
 
-  onChange(val:any){
-    this.onChangeCallback(val);
-  }
+  onChange(val: any) { this.onChangeCallback(val); }
 
   // ControlValueAccessor Interface
-  writeValue(value: any) {
-    
-  }
+  writeValue(value: any) { console.log('writeValue ', value); }
 
   // ControlValueAccessor Interface
-  registerOnChange(fn: any) {
-    this.onChangeCallback = fn;
-  }
+  registerOnChange(fn: any) { this.onChangeCallback = fn; }
 
   // ControlValueAccessor Interface
-  registerOnTouched(fn: any) {
-    this.onTouchedCallback = fn;
-  }
+  registerOnTouched(fn: any) { }
 
-  setDisabledState?(isDisabled: boolean): void {
-    
-  }
+  setDisabledState?(isDisabled: boolean): void { }
 
 }

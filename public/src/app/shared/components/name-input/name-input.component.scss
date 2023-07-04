@@ -1,6 +1,16 @@
 :host {
-    .label {
-        font-size: 14px;
-        font-family: 'Helvetica Neue,Medium';
+    display: flex;
+    flex: 1;
+
+    // .label {
+    //     font-size: 14px;
+    //     font-family: 'Helvetica Neue,Medium';
+    // }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        padding-bottom: 1rem;
     }
 }

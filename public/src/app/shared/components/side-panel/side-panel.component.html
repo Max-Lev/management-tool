@@ -1,4 +1,17 @@
 <form [formGroup]="eventsForm">
-    <app-name-input ngDefaultControl formControlName="event"></app-name-input>
-    <app-color-picker formControlName="color"></app-color-picker>
+
+    <div class="event-section">
+        <app-name-input ngDefaultControl formControlName="event"></app-name-input>
+        <app-color-picker formControlName="color"></app-color-picker>
+    </div>
+
+    <div class="description-section">
+        <app-description-input formControlName="description"></app-description-input>
+    </div>
+
+    <div class="actions-container">
+        <p-button (click)="cancel()" class="light" label="CANCEL" styleClass="p-button-outlined p-button-secondary"></p-button>
+        <p-button class="light" label="SAVE" icon="pi pi-save" styleClass="p-button-outlined p-button-success"></p-button>
+    </div>
+
 </form>

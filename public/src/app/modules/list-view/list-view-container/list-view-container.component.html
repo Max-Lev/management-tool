@@ -27,5 +27,12 @@
 </p-table>
 
 <p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="hide()">
-    <app-side-panel></app-side-panel>
+    <ng-template pTemplate="header">
+        <h3>New Event</h3>
+    </ng-template>
+    <ng-template pTemplate="content">
+        <app-side-panel (cancelEvent)="cancelEventHandler($event)"></app-side-panel>
+    </ng-template>
+    <!-- <ng-template pTemplate="footer">Footer Content</ng-template> -->
+
 </p-sidebar>

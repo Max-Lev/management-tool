@@ -10,15 +10,19 @@ import { ColorPickerComponent } from './components/color-picker/color-picker.com
 import { DescriptionInputComponent } from './components/description-input/description-input.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { ButtonModule } from 'primeng/button';
 @NgModule({
   declarations: [
     SvgIconComponent,
     TitleComponent,
     CustomKeyValuePipe,
-    // SidePanelComponent,
-    // NameInputComponent,
-    // ColorPickerComponent,
-    // DescriptionInputComponent,
+
+    SidePanelComponent,
+    NameInputComponent,
+    ColorPickerComponent,
+    DescriptionInputComponent,
 
   ],
   imports: [
@@ -26,20 +30,26 @@ import { InputTextModule } from 'primeng/inputtext';
     SidebarModule,
     ReactiveFormsModule,
     FormsModule,
-    InputTextModule
+    InputTextModule,
+    InputTextareaModule,
+    ColorPickerModule,
+    ButtonModule
   ],
   exports: [
     SvgIconComponent,
     TitleComponent,
     CustomKeyValuePipe,
-    // SidePanelComponent,
-    // SidebarModule,
-    // InputTextModule,
-    // NameInputComponent,
-    // ColorPickerComponent,
-    // DescriptionInputComponent,
-    // FormsModule,
-    // ReactiveFormsModule
+
+    SidePanelComponent,
+    SidebarModule,
+    InputTextModule,
+    NameInputComponent,
+    ColorPickerComponent,
+    DescriptionInputComponent,
+    FormsModule,
+    ReactiveFormsModule,
+    ColorPickerModule,
+    ButtonModule
   ]
 })
 export class SharedModule { }
