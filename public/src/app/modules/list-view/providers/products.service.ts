@@ -24,7 +24,7 @@ export class ProductsService {
   }
 
   getProducts$(): Observable<IProducts[]> {
-    return this.httpClient.get<IProducts[]>(environment.products);
+    return this.httpClient.get<IProducts[]>(environment.events);
   }
 
   getAllData$(): Observable<{ col: IColumn[], prods: IProducts[] }> {

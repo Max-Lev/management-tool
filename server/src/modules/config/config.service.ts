@@ -7,10 +7,12 @@ import { UpdateConfigDto } from './dto/update-config.dto';
 import { SVG_ICONS } from 'db/svg-icons';
 import { IconsConfig } from './entities/config.entity';
 import { COLS, Column } from 'db/columns';
-import { IProducts, PRODUCTS } from 'db/products';
+import { IEvents, EVENTS } from 'db/events';
 
 @Injectable()
 export class ConfigService {
+
+  data = [...EVENTS];
 
   async getSvgIcons(): Promise<IconsConfig[]> {
     return SVG_ICONS;
@@ -18,12 +20,22 @@ export class ConfigService {
   async getColumns(): Promise<Column[]> {
     return COLS;
   }
-  async getProducts(): Promise<IProducts[]> {
-    return PRODUCTS;
+  async getEvents(): Promise<IEvents[]> {
+    return EVENTS;
   }
 
-  create(createConfigDto: CreateConfigDto) {
-    return 'This action adds a new config';
+  async create(event: IEvents): Promise<IEvents[]> {
+
+    this.data.push({
+      color: event.color,
+      name: event.name,
+      description: event.description,
+      create_date: new Date().toLocaleDateString(),
+      last_update: new Date().toLocaleDateString(),
+      create_by:'UNKNOW'
+    });
+    console.log(this.data)
+    return this.data;
   }
 
   findAll() {

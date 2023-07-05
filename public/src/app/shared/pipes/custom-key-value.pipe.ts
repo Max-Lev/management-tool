@@ -12,15 +12,18 @@ interface Item {
 export class CustomKeyValuePipe implements PipeTransform {
 
   transform(value: IProducts): any {
-    const keys: string[] = Object.keys(value);
+    const keys: string[] = Object.keys(value);//.filter(k=>k!=='description');
     const values: string[] = Object.values(value);
 
     const data: Item[] = [];
     keys.reduce((prev: any, current: any, index: number) => {
       const item: Item = { key: current, value: prev[index] };
-      data.push(item);
+      if(current!=='description'){
+        data.push(item);
+      }
       return prev;
     }, values);
+    console.log(data)
     return data;
   }
 

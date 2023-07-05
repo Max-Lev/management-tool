@@ -14,7 +14,9 @@
         <tr>
             <td *ngFor="let prod of (product | customKeyValue)">
                 <ng-container *ngIf="prod.key=='color';else colt">
-                    <div [style.background]="prod.value" style="width: 25px;height: 25px;border-radius: 5px;">
+                    <div [style.background]="prod.value"
+                        style="width: 25px;height: 25px;border-radius: 5px;
+                        border: 1px solid lightgrey;">
                     </div>
                 </ng-container>
                 <ng-template #colt>
@@ -26,12 +28,13 @@
 
 </p-table>
 
-<p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="hide()">
+<p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="closeSideBar()">
     <ng-template pTemplate="header">
         <h3>New Event</h3>
     </ng-template>
     <ng-template pTemplate="content">
-        <app-side-panel (cancelEvent)="cancelEventHandler($event)"></app-side-panel>
+        <app-side-panel (saveEvent)="saveEventHandler($event)"
+            (cancelEvent)="cancelEventHandler($event)"></app-side-panel>
     </ng-template>
     <!-- <ng-template pTemplate="footer">Footer Content</ng-template> -->
 

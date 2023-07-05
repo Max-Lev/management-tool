@@ -10,19 +10,31 @@ exports.ConfigService = void 0;
 const common_1 = require("@nestjs/common");
 const svg_icons_1 = require("../../../db/svg-icons");
 const columns_1 = require("../../../db/columns");
-const products_1 = require("../../../db/products");
+const events_1 = require("../../../db/events");
 let ConfigService = class ConfigService {
+    constructor() {
+        this.data = [...events_1.EVENTS];
+    }
     async getSvgIcons() {
         return svg_icons_1.SVG_ICONS;
     }
     async getColumns() {
         return columns_1.COLS;
     }
-    async getProducts() {
-        return products_1.PRODUCTS;
+    async getEvents() {
+        return events_1.EVENTS;
     }
-    create(createConfigDto) {
-        return 'This action adds a new config';
+    async create(event) {
+        this.data.push({
+            color: event.color,
+            name: event.name,
+            description: event.description,
+            create_date: new Date().toLocaleDateString(),
+            last_update: new Date().toLocaleDateString(),
+            create_by: 'UNKNOW'
+        });
+        console.log(this.data);
+        return this.data;
     }
     findAll() {
         return `This action returns all config`;

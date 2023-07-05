@@ -1,7 +1,7 @@
-<form [formGroup]="eventsForm">
+<form [formGroup]="eventsForm" (ngSubmit)="save(eventsForm.value)">
 
     <div class="event-section">
-        <app-name-input formControlName="event"></app-name-input>
+        <app-name-input formControlName="name"></app-name-input>
         <app-color-picker formControlName="color"></app-color-picker>
     </div>
 
@@ -13,7 +13,9 @@
         <p-button (click)="cancel()" class="light" label="CANCEL"
             styleClass="p-button-outlined p-button-secondary"></p-button>
 
-        <p-button [disabled]="(eventsForm.valid) ? false:true" class="light" label="SAVE" icon="pi pi-save"
+        <p-button 
+        type="submit"
+        [disabled]="(eventsForm.valid) ? false:true" class="light" label="SAVE" icon="pi pi-save"
             styleClass="p-button-outlined p-button-success"></p-button>
     </div>
 

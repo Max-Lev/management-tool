@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigController = void 0;
 const common_1 = require("@nestjs/common");
 const config_service_1 = require("./config.service");
-const create_config_dto_1 = require("./dto/create-config.dto");
 const update_config_dto_1 = require("./dto/update-config.dto");
 let ConfigController = class ConfigController {
     constructor(configService) {
@@ -27,11 +26,11 @@ let ConfigController = class ConfigController {
     columns() {
         return this.configService.getColumns();
     }
-    products() {
-        return this.configService.getProducts();
+    events() {
+        return this.configService.getEvents();
     }
-    create(createConfigDto) {
-        return this.configService.create(createConfigDto);
+    create(event) {
+        return this.configService.create(event);
     }
     findAll() {
         return this.configService.findAll();
@@ -59,16 +58,16 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ConfigController.prototype, "columns", null);
 __decorate([
-    (0, common_1.Get)('products'),
+    (0, common_1.Get)('events'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], ConfigController.prototype, "products", null);
+], ConfigController.prototype, "events", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_config_dto_1.CreateConfigDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ConfigController.prototype, "create", null);
 __decorate([

@@ -4,5 +4,6 @@ export const environment = {
     production: false,
     iconsConfig: `${server}/config/icons`,
     columns: `${server}/config/columns`,
-    products: `${server}/config/products`
+    events: `${server}/config/events`,
+    postEvent: `${server}/config`,
 };

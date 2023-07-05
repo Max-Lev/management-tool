@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ConfigService } from './config.service';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
+import { IEvents } from 'db/events';
 
 @Controller('config')
 export class ConfigController {
@@ -15,14 +16,16 @@ export class ConfigController {
   columns() {
     return this.configService.getColumns();
   }
-  @Get('products')
-  products() {
-    return this.configService.getProducts();
+  @Get('events')
+  events() {
+    return this.configService.getEvents();
   }
 
+  // @Post(@Body())
+
   @Post()
-  create(@Body() createConfigDto: CreateConfigDto) {
-    return this.configService.create(createConfigDto);
+  create(@Body() event: IEvents) {
+    return this.configService.create(event);
   }
 
   @Get()
