@@ -1,47 +1,56 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { IEventsForm } from 'src/app/shared/models/events-form.model';
-import { EventsActions } from '../actions/events.actions';
+import { EVENT_UPDATE_ACTION, EventsActions } from '../actions/events.actions';
+import { IProduct } from 'src/app/modules/list-view/models/products.model';
 
 export const eventsFeatureKey = 'events';
 
 export interface EventsState {
-  event: string;
-  color: string;
-  description: string;
-  createdDate: string;
-  updatedDate: string;
-}
+  type: string;
+  payload: IProduct;
+};
 
 export const initialState: EventsState = {
-  event: '',
-  color: '',
-  description: '',
-  createdDate: '',
-  updatedDate: ''
+  type: EventsActions.events().type,
+  payload: {
+    name: '',
+    color: '',
+    description: '',
+    create_date: '',
+    last_update: '',
+    create_by: ''
+  }
 };
 
 export const EventsReducer = createReducer(
   initialState,
   on(EventsActions.eventsAdd, (state: EventsState, action: { data: IEventsForm }) => {
-    debugger;
-    return {
+    const add = {
       ...state, ...action.data, ...{
         createdDate: new Date().toLocaleDateString(),
         updatedDate: new Date().toLocaleDateString()
       }
     };
+    console.log(add);
+    return add;
   }),
-  on(EventsActions.eventsUpdate, (state: EventsState, action: { data: IEventsForm }) => {
-    return {
-      ...state, ...action, ...{
+  on(EventsActions.eventsUpdate, (state: EventsState, action: { data: IProduct }) => {
+    const update = {
+      ...state, ...action.data, ...{
         updatedDate: new Date().toLocaleDateString()
       }
     };
+    console.log(update);
+    return update;
   }),
   on(EventsActions.eventsSuccess, (state: EventsState, action: { data: IEventsForm }) => {
-    debugger;
-    return {...state, ...action,};
+    return { ...state, ...action.data, };
+  }),
+  on(EVENT_UPDATE_ACTION, (state: EventsState, action: { payload: IProduct }) => {
+    const update = { ...state, ...action, };
+    console.log(update)
+    return update;
   })
 );
 

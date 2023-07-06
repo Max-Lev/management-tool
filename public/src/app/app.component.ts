@@ -23,26 +23,26 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.store.pipe(select(modeStateSelector)).subscribe((type: MODE_TYPE_ENUM) => {
-      console.log('MODE_TYPE_ENUM ', type)
-    })
+    // this.store.pipe(select(modeStateSelector)).subscribe((type: MODE_TYPE_ENUM) => {
+    //   console.log('MODE_TYPE_ENUM ', type)
+    // })
 
-    this.modeState$.subscribe((modeState: ModeState) => {
-      console.log('ModeState ', modeState);
-      if (modeState.type === MODE_TYPE_ENUM.ADD) {
-        this.sidebarVisible = true;
-      } else {
-        this.sidebarVisible = false;
-      }
-    })
-    this.store.subscribe((managementState: ManagementState) => {
-      console.log('ManagementState ', managementState);
-    })
+    // this.modeState$.subscribe((modeState: ModeState) => {
+    //   console.log('ModeState ', modeState);
+    //   if (modeState.type === MODE_TYPE_ENUM.ADD) {
+    //     this.sidebarVisible = true;
+    //   } else {
+    //     this.sidebarVisible = false;
+    //   }
+    // })
+    // this.store.subscribe((managementState: ManagementState) => {
+    //   console.log('ManagementState ', managementState);
+    // })
   }
 
   hide() {
     this.store.dispatch(CLOSE_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.CLOSE } }))
-    console.log('hide')
+    // console.log('hide')
   }
 
 }

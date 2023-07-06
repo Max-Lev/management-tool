@@ -11,7 +11,7 @@ export interface IEvent {
 export const EVENTS: IEvent[] = [
     {
         id:1,
-        color: 'red',
+        color: '#07fa44',
         name: 'Accident',
         create_date: '26/06/2023',
         last_update: '27/06/2023',
@@ -19,7 +19,7 @@ export const EVENTS: IEvent[] = [
         description: 'Car crash'
     },
     {   id:2,
-        color: 'blue',
+        color: '#0000ff',
         name: 'Car Accident',
         create_date: '01/01/2023',
         last_update: '27/06/2023',

@@ -40,7 +40,10 @@ export class DescriptionInputComponent implements ControlValueAccessor, Validato
     this.onChangeCallback(value);
   }
 
-  writeValue(obj: any): void { this.onChangeCallback(obj); }
+  writeValue(obj: any): void { 
+    this.value = obj;
+    this.onChangeCallback(obj); 
+  }
 
   registerOnChange(fn: any): void { this.change = fn; }
 

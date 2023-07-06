@@ -3,6 +3,7 @@
     <ng-template pTemplate="header">
         <tr>
             <ng-container *ngFor="let col of cols | async">
+            <!-- <ng-container *ngFor="let col of cols"> -->
                 <th pSortableColumn="{{col.field}}" style="width:20%">{{col.header}}
                     <p-sortIcon field="{{col.field}}"></p-sortIcon>
                 </th>
@@ -10,7 +11,7 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-product >
+    <ng-template pTemplate="body" let-product let-columns="columns">
         <tr (click)="edit(product)">
             <td *ngFor="let prod of (product | customKeyValue)">
                 <ng-container *ngIf="prod.key=='color';else colt">
@@ -19,10 +20,7 @@
                     </div>
                 </ng-container>
                 <ng-template #colt>
-                    <!-- <ng-container *ngIf="col[prod.key]"> -->
-                        <!-- {{col | json}} -->
-                        {{prod.value}}
-                    <!-- </ng-container> -->
+                    {{prod.value}}
                 </ng-template>
             </td>
         </tr>
@@ -32,7 +30,7 @@
 
 <p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="closeSideBar()">
     <ng-template pTemplate="header">
-        <h3>New Event</h3>
+        <h3>{{title}}</h3>
     </ng-template>
     <ng-template pTemplate="content">
         <app-side-panel (saveEvent)="saveEventHandler($event)"

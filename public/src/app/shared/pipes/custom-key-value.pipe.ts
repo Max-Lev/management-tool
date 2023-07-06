@@ -12,7 +12,7 @@ interface Item {
 export class CustomKeyValuePipe implements PipeTransform {
 
   transform(value: IProduct): any {
-    const keys: string[] = Object.keys(value);//.filter(k=>k!=='description');
+    const keys: string[] = Object.keys(value);
     const values: string[] = Object.values(value);
 
     const data: Item[] = [];

@@ -1,5 +1,6 @@
 import { ofType } from '@ngrx/effects';
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
+import { IProduct } from 'src/app/modules/list-view/models/products.model';
 
 export enum MODE_TYPE_ENUM {
   LIST = '[MODE] LIST',
@@ -8,6 +9,7 @@ export enum MODE_TYPE_ENUM {
   CLOSE = '[MODE] CLOSE',
   INITIAL = '[MODE] INITIAL',
   SAVE = '[MODE] SAVE',
+  EDIT = '[MODE] EDIT',
 }
 
 export const INITIAL_MODE_ACTION = createAction(MODE_TYPE_ENUM.INITIAL);
@@ -20,6 +22,9 @@ export const TILES_MODE_ACTION = createAction(MODE_TYPE_ENUM.TILES,
 
 export const ADD_MODE_ACTION = createAction(MODE_TYPE_ENUM.ADD,
   props<{ payload: { modeType: MODE_TYPE_ENUM.ADD } }>());
+
+export const EDIT_MODE_ACTION = createAction(MODE_TYPE_ENUM.EDIT,
+  props<{ payload: IProduct }>());
 
 export const CLOSE_MODE_ACTION = createAction(MODE_TYPE_ENUM.CLOSE,
   props<{ payload: { modeType: MODE_TYPE_ENUM.CLOSE } }>());

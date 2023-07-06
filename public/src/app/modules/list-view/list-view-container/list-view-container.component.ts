@@ -3,7 +3,7 @@ import { IColumn, IProduct } from '../models/products.model';
 import { Observable, map } from 'rxjs';
 import { ProductsEffects } from 'src/app/store/effects/products.effects';
 import { ManagementState } from 'src/app/store/reducers';
-import { Store, select } from '@ngrx/store';
+import { Action, Store, select } from '@ngrx/store';
 import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
 import { ProductsService } from '../providers/products.service';
 import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
@@ -11,7 +11,7 @@ import { ADD_MODE_ACTION, CLOSE_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/stor
 import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
 import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
 import { IEventsForm } from 'src/app/shared/models/events-form.model';
-import { EventsActions } from 'src/app/store/mode/actions/events.actions';
+import { EVENT_UPDATE_ACTION, EventsActions } from 'src/app/store/mode/actions/events.actions';
 
 
 @Component({
@@ -22,6 +22,8 @@ import { EventsActions } from 'src/app/store/mode/actions/events.actions';
 
 })
 export class ListViewContainerComponent implements OnInit {
+
+  title = 'New event';
 
   products: IProduct[];
 
@@ -42,7 +44,7 @@ export class ListViewContainerComponent implements OnInit {
     this.setProducts$();
     this.toggleSideBar();
 
-    this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
+    // this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
 
     this.store.subscribe((state: ManagementState) => {
       console.log('ManagementState ', state);
@@ -73,6 +75,7 @@ export class ListViewContainerComponent implements OnInit {
 
   private setColumns$() {
     this.cols = this.store.pipe(select(columnsstateSelector));
+    // this.store.pipe(select(columnsstateSelector)).subscribe(c => this.cols = [...c]);
   }
 
   cancelEventHandler(action: boolean) {
@@ -82,14 +85,16 @@ export class ListViewContainerComponent implements OnInit {
   }
 
   saveEventHandler(eventsFormValue: IEventsForm) {
-    //     evemtsState: Observable<EventsState>;
+    // evemtsState: Observable<EventsState>;
     // this.evemtsState = this.store.pipe(select(eventsStateSelector));
     this.store.dispatch(EventsActions.eventsAdd({ data: eventsFormValue }));
     this.closeSideBar();
   }
 
-  edit(product:IProduct){
-    console.log(product)
+  edit(product: IProduct) {
+    this.title = 'Edit event';
+    this.store.dispatch<Action>(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
+    this.store.dispatch(EVENT_UPDATE_ACTION({ payload: product }))
   }
 
 }

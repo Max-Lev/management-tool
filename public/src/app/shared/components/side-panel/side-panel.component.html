@@ -13,10 +13,8 @@
         <p-button (click)="cancel()" class="light" label="CANCEL"
             styleClass="p-button-outlined p-button-secondary"></p-button>
 
-        <p-button 
-        type="submit"
-        [disabled]="(eventsForm.valid) ? false:true" class="light" label="SAVE" icon="pi pi-save"
-            styleClass="p-button-outlined p-button-success"></p-button>
+        <p-button type="submit" [disabled]="(eventsForm.valid) ? false:true" class="light" label="SAVE"
+            icon="pi pi-save" styleClass="p-button-outlined p-button-success"></p-button>
     </div>
 
 </form>

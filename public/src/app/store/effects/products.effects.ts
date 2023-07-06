@@ -26,7 +26,6 @@ export class ProductsEffects {
       exhaustMap(
         () => this.productsService.getProducts$().pipe(
           map(products => {
-            debugger;
             return getProductsSuccessAction({ payload: products, })
           }),
           catchError(() => EMPTY)
@@ -41,7 +40,6 @@ export class ProductsEffects {
         return this.productsService.getColumns$()
           .pipe(
             map((columns) => {
-              debugger;
               return ColumnsActions.loadColumnsSuccess({ payload: columns })
             }),
             catchError(() => EMPTY)

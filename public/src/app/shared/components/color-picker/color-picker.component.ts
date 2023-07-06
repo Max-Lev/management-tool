@@ -41,7 +41,9 @@ export class ColorPickerComponent implements ControlValueAccessor, Validator,
 
   onChange(value: string): void { this.onChangeCallback(value); }
 
-  writeValue(obj: any): void { }
+  writeValue(obj: any): void { 
+    this.color = (obj!==null) ? obj : this.color;
+  }
 
   registerOnChange(fn: any): void { this.onChange = fn; }
 
