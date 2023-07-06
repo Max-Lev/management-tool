@@ -10,17 +10,19 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-product>
-        <tr>
+    <ng-template pTemplate="body" let-product >
+        <tr (click)="edit(product)">
             <td *ngFor="let prod of (product | customKeyValue)">
                 <ng-container *ngIf="prod.key=='color';else colt">
-                    <div [style.background]="prod.value"
-                        style="width: 25px;height: 25px;border-radius: 5px;
+                    <div [style.background]="prod.value" style="width: 25px;height: 25px;border-radius: 5px;
                         border: 1px solid lightgrey;">
                     </div>
                 </ng-container>
                 <ng-template #colt>
-                    {{prod.value}}
+                    <!-- <ng-container *ngIf="col[prod.key]"> -->
+                        <!-- {{col | json}} -->
+                        {{prod.value}}
+                    <!-- </ng-container> -->
                 </ng-template>
             </td>
         </tr>

@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ConfigService } from './config.service';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
-import { IEvents } from 'db/events';
+import { IEvent } from 'db/events';
 
 @Controller('config')
 export class ConfigController {
@@ -21,10 +21,8 @@ export class ConfigController {
     return this.configService.getEvents();
   }
 
-  // @Post(@Body())
-
   @Post()
-  create(@Body() event: IEvents) {
+  create(@Body() event: IEvent) {
     return this.configService.create(event);
   }
 

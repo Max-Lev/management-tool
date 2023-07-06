@@ -7,7 +7,9 @@ import { UpdateConfigDto } from './dto/update-config.dto';
 import { SVG_ICONS } from 'db/svg-icons';
 import { IconsConfig } from './entities/config.entity';
 import { COLS, Column } from 'db/columns';
-import { IEvents, EVENTS } from 'db/events';
+import { IEvent, EVENTS } from 'db/events';
+import { EventModel } from './dto/create-event.dto';
+import { rejects } from 'assert';
 
 @Injectable()
 export class ConfigService {
@@ -20,22 +22,22 @@ export class ConfigService {
   async getColumns(): Promise<Column[]> {
     return COLS;
   }
-  async getEvents(): Promise<IEvents[]> {
+  async getEvents(): Promise<IEvent[]> {
     return EVENTS;
   }
 
-  async create(event: IEvents): Promise<IEvents[]> {
+  async create(event: IEvent): Promise<IEvent[]> {
 
-    this.data.push({
-      color: event.color,
-      name: event.name,
-      description: event.description,
-      create_date: new Date().toLocaleDateString(),
-      last_update: new Date().toLocaleDateString(),
-      create_by:'UNKNOW'
+    event = { ...event, ...{ id: this.data.length + 1 } };
+    
+    this.data.push(new EventModel(event));
+
+    return await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(this.data);
+      }, 1000);
     });
-    console.log(this.data)
-    return this.data;
+
   }
 
   findAll() {

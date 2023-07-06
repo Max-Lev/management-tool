@@ -1,4 +1,5 @@
-export interface IEvents {
+export interface IEvent {
+    id:number;
     color: string;
     name: string;
     create_date: string;
@@ -7,8 +8,9 @@ export interface IEvents {
     description: string;
 }
 
-export const EVENTS: IEvents[] = [
+export const EVENTS: IEvent[] = [
     {
+        id:1,
         color: 'red',
         name: 'Accident',
         create_date: '26/06/2023',
@@ -16,7 +18,7 @@ export const EVENTS: IEvents[] = [
         create_by: 'Max L',
         description: 'Car crash'
     },
-    {
+    {   id:2,
         color: 'blue',
         name: 'Car Accident',
         create_date: '01/01/2023',

@@ -11,6 +11,7 @@ const common_1 = require("@nestjs/common");
 const svg_icons_1 = require("../../../db/svg-icons");
 const columns_1 = require("../../../db/columns");
 const events_1 = require("../../../db/events");
+const create_event_dto_1 = require("./dto/create-event.dto");
 let ConfigService = class ConfigService {
     constructor() {
         this.data = [...events_1.EVENTS];
@@ -25,16 +26,13 @@ let ConfigService = class ConfigService {
         return events_1.EVENTS;
     }
     async create(event) {
-        this.data.push({
-            color: event.color,
-            name: event.name,
-            description: event.description,
-            create_date: new Date().toLocaleDateString(),
-            last_update: new Date().toLocaleDateString(),
-            create_by: 'UNKNOW'
+        event = Object.assign(Object.assign({}, event), { id: this.data.length + 1 });
+        this.data.push(new create_event_dto_1.EventModel(event));
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(this.data);
+            }, 1000);
         });
-        console.log(this.data);
-        return this.data;
     }
     findAll() {
         return `This action returns all config`;

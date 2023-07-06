@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { exhaustMap, map, catchError, of, Observable, EMPTY, mergeMap } from 'rxjs';
 
 import { ListViewModule } from 'src/app/modules/list-view/list-view.module';
-import { IProducts } from 'src/app/modules/list-view/models/products.model';
+import { IProduct } from 'src/app/modules/list-view/models/products.model';
 import { getProductsSuccessAction, LoadPrdoductsAction } from '../mode/actions/products.actions';
 import { ProductsLoadSuccess } from '../mode/reducers/products.reducer';
 import { ProductsService } from 'src/app/modules/list-view/providers/products.service';
@@ -20,7 +20,7 @@ export class ProductsEffects {
 
   }
 
-  products$: Observable<{ type: string, payload: IProducts[] } | { type: string; }> =
+  products$: Observable<{ type: string, payload: IProduct[] } | { type: string; }> =
     createEffect(() => this.actions$.pipe(
       ofType(LoadPrdoductsAction().type),
       exhaustMap(

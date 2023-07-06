@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
 import { ProductsActions, getProductsFailureAction, getProductsSuccessAction, LoadPrdoductsAction } from '../actions/products.actions';
-import { IProducts } from 'src/app/modules/list-view/models/products.model';
+import { IProduct } from 'src/app/modules/list-view/models/products.model';
 export const productsFeatureKey = 'products';
 
 export interface ProductsState {
   type: string;
-  payload: IProducts[];
+  payload: IProduct[];
 }
 
 export const ProductsInitialState: ProductsState = {
@@ -23,7 +23,7 @@ export const ProductsLoadError: ProductsState = {
 
 export const ProductsReducer = createReducer(
   ProductsInitialState,
-  on(getProductsSuccessAction, (state, action: { payload: IProducts[] }) => {
+  on(getProductsSuccessAction, (state, action: { payload: IProduct[] }) => {
     return { ...state, ...action }
   }),
   on(getProductsFailureAction, (state: ProductsState, action: any) => {

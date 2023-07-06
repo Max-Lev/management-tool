@@ -1,4 +1,4 @@
-export interface IProducts {
+export interface IProduct {
     color: string;
     name: string;
     description:string;

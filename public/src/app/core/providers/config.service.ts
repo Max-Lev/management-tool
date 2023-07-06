@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, map, tap } from 'rxjs';
 import { IconsConfig } from 'src/app/shared/models/icons.model';
-import { IColumn, IProducts } from 'src/app/modules/list-view/models/products.model';
+import { IColumn, IProduct } from 'src/app/modules/list-view/models/products.model';
 @Injectable({
   providedIn: CoreModule
 })

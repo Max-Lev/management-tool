@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IColumn, IProducts } from '../models/products.model';
+import { IColumn, IProduct } from '../models/products.model';
 import { Observable, map } from 'rxjs';
 import { ProductsEffects } from 'src/app/store/effects/products.effects';
 import { ManagementState } from 'src/app/store/reducers';
@@ -23,10 +23,9 @@ import { EventsActions } from 'src/app/store/mode/actions/events.actions';
 })
 export class ListViewContainerComponent implements OnInit {
 
-  products: IProducts[];
+  products: IProduct[];
 
   cols: Observable<IColumn[]>;
-  // cols: IColumn[];
 
   modeState$: Observable<ModeState>;
 
@@ -42,7 +41,9 @@ export class ListViewContainerComponent implements OnInit {
     this.setColumns$();
     this.setProducts$();
     this.toggleSideBar();
-    this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }))
+
+    this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
+
     this.store.subscribe((state: ManagementState) => {
       console.log('ManagementState ', state);
     });
@@ -56,7 +57,6 @@ export class ListViewContainerComponent implements OnInit {
 
   private toggleSideBar() {
     this.modeState$.subscribe((modeState: ModeState) => {
-      console.log('ModeState ', modeState);
       if (modeState.type === MODE_TYPE_ENUM.ADD) {
         this.sidebarVisible = true;
       } else {
@@ -66,20 +66,13 @@ export class ListViewContainerComponent implements OnInit {
   }
 
   private setProducts$() {
-    this.store.pipe(select(productsStateSelector)).subscribe((productsState: IProducts[]) => {
-      this.products = productsState;
+    this.store.pipe(select(productsStateSelector)).subscribe((productsState: IProduct[]) => {
+      this.products = [...productsState];
     });
   }
 
   private setColumns$() {
     this.cols = this.store.pipe(select(columnsstateSelector));
-    // this.store.pipe(select(columnsstateSelector)).subscribe(d => {
-    //   this.cols = [...d];
-    // })
-
-    // .subscribe(c=>{
-    //   this.cols = c;
-    // });
   }
 
   cancelEventHandler(action: boolean) {
@@ -91,8 +84,12 @@ export class ListViewContainerComponent implements OnInit {
   saveEventHandler(eventsFormValue: IEventsForm) {
     //     evemtsState: Observable<EventsState>;
     // this.evemtsState = this.store.pipe(select(eventsStateSelector));
-    debugger;
     this.store.dispatch(EventsActions.eventsAdd({ data: eventsFormValue }));
+    this.closeSideBar();
+  }
+
+  edit(product:IProduct){
+    console.log(product)
   }
 
 }

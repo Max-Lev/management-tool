@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { EMPTY, Observable, catchError, combineLatest, combineLatestAll, debounce, debounceTime, exhaustMap, forkJoin, map, mergeAll, mergeMap, of, switchMap, tap } from 'rxjs';
 import { IconsConfig } from 'src/app/shared/models/icons.model';
 import { environment } from 'src/environments/environment';
-import { IColumn, IProducts } from '../models/products.model';
+import { IColumn, IProduct } from '../models/products.model';
 import { createEffect, ofType } from '@ngrx/effects';
 import { ColumnsActions } from 'src/app/store/mode/actions/columns.actions';
 import { LoadPrdoductsAction, getProductsSuccessAction } from 'src/app/store/mode/actions/products.actions';
@@ -23,15 +23,15 @@ export class ProductsService {
     return this.httpClient.get<IColumn[]>(environment.columns)
   }
 
-  getProducts$(): Observable<IProducts[]> {
-    return this.httpClient.get<IProducts[]>(environment.events);
+  getProducts$(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(environment.events);
   }
 
-  getAllData$(): Observable<{ col: IColumn[], prods: IProducts[] }> {
+  getAllData$(): Observable<{ col: IColumn[], prods: IProduct[] }> {
     const columns$ = this.getColumns$();
     const products$ = this.getProducts$();
 
-    return forkJoin([columns$, products$], (col: IColumn[], prods: IProducts[]) => {
+    return forkJoin([columns$, products$], (col: IColumn[], prods: IProduct[]) => {
       return {
         col, prods
       };
@@ -73,6 +73,10 @@ export class ProductsService {
       }),
       catchError(error => EMPTY))
   );
+
+  // updateProduct$ = createEffect(() => {
+  //   return this.actions$
+  // })
 
 
 }

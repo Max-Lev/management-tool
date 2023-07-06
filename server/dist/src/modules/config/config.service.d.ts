@@ -1,13 +1,13 @@
 import { UpdateConfigDto } from './dto/update-config.dto';
 import { IconsConfig } from './entities/config.entity';
 import { Column } from 'db/columns';
-import { IEvents } from 'db/events';
+import { IEvent } from 'db/events';
 export declare class ConfigService {
-    data: IEvents[];
+    data: IEvent[];
     getSvgIcons(): Promise<IconsConfig[]>;
     getColumns(): Promise<Column[]>;
-    getEvents(): Promise<IEvents[]>;
-    create(event: IEvents): Promise<IEvents[]>;
+    getEvents(): Promise<IEvent[]>;
+    create(event: IEvent): Promise<IEvent[]>;
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updateConfigDto: UpdateConfigDto): string;

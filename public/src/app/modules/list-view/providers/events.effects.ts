@@ -6,7 +6,7 @@ import { IEventsForm } from 'src/app/shared/models/events-form.model';
 import { EventsActions } from 'src/app/store/mode/actions/events.actions';
 import { getProductsSuccessAction } from 'src/app/store/mode/actions/products.actions';
 import { environment } from 'src/environments/environment';
-import { IProducts } from '../models/products.model';
+import { IProduct } from '../models/products.model';
 
 
 
@@ -14,23 +14,20 @@ import { IProducts } from '../models/products.model';
 export class EventsEffects {
 
 
-  constructor(private actions$: Actions,private http: HttpClient) { }
+  constructor(private actions$: Actions, private http: HttpClient) { }
 
   events$ = createEffect(() =>
     this.actions$.pipe(
       ofType(EventsActions.eventsAdd),
-      exhaustMap((action) => {
 
-        const d = action.data;
-        debugger;
+      exhaustMap((action: { data: IEventsForm }) => {
         return this.addEvent$(action.data).pipe(
           map((event: IEventsForm[]) => {
-            return getProductsSuccessAction({ payload: event as unknown as IProducts[], })
-            // return EventsActions.eventsAdd({ data: event })
+            return getProductsSuccessAction({ payload: event as unknown as IProduct[], })
           })
         )
-
       }),
+
       catchError(error => EMPTY)
     ));
 
