@@ -8,7 +8,7 @@ export interface IEvent {
     description: string;
 }
 
-export const EVENTS: IEvent[] = [
+export let EVENTS: IEvent[] = [
     {
         id:1,
         color: '#07fa44',

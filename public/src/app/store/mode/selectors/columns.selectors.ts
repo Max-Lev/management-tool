@@ -7,7 +7,6 @@ export const columnsFeatureState = (state: ManagementState) => state.columnsStat
 export const columnsstateSelector = createSelector(
     columnsFeatureState,
     (state: ColumnsState) => {
-        console.log(state.columns)
         return state.columns
     }
 );

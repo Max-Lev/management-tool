@@ -23,7 +23,7 @@ export class CustomKeyValuePipe implements PipeTransform {
       }
       return prev;
     }, values);
-    console.log(data)
+    
     return data;
   }
 

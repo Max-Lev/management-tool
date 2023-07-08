@@ -32,6 +32,9 @@ let ConfigController = class ConfigController {
     create(event) {
         return this.configService.create(event);
     }
+    updateProduct(event) {
+        return this.configService.updateProduct(event);
+    }
     findAll() {
         return this.configService.findAll();
     }
@@ -70,6 +73,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], ConfigController.prototype, "create", null);
+__decorate([
+    (0, common_1.Put)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], ConfigController.prototype, "updateProduct", null);
 __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),

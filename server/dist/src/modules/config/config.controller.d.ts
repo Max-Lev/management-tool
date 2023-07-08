@@ -8,6 +8,7 @@ export declare class ConfigController {
     columns(): Promise<import("../../../db/columns").Column[]>;
     events(): Promise<IEvent[]>;
     create(event: IEvent): Promise<IEvent[]>;
+    updateProduct(event: IEvent): IEvent[];
     findAll(): string;
     findOne(id: string): string;
     update(id: string, updateConfigDto: UpdateConfigDto): string;

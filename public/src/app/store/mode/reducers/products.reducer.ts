@@ -27,7 +27,6 @@ export const ProductsReducer = createReducer(
     return { ...state, ...action }
   }),
   on(getProductsFailureAction, (state: ProductsState, action: any) => {
-    console.log(state, action);
     return { ...state, ...action }
   })
 );

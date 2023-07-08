@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { ConfigService } from './config.service';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
@@ -25,6 +25,12 @@ export class ConfigController {
   create(@Body() event: IEvent) {
     return this.configService.create(event);
   }
+
+  @Put()
+  updateProduct(@Body() event:IEvent){
+    return this.configService.updateProduct(event);
+  }
+  
 
   @Get()
   findAll() {

@@ -6,7 +6,6 @@ export const productsFeatureModuel = (state: ManagementState) => state.productsS
 export const productsStateSelector = createSelector(
     productsFeatureModuel,
     (productsFeatureModuel: ProductsState) => {
-        console.log('selector: ', productsFeatureModuel.payload);
         return productsFeatureModuel.payload
     }
 )

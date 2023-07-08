@@ -6,4 +6,5 @@ export const environment = {
     columns: `${server}/config/columns`,
     events: `${server}/config/events`,
     postEvent: `${server}/config`,
+    updateEvent: `${server}/config`
 };

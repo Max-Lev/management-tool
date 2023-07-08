@@ -8,9 +8,10 @@ export const EventsActions = createActionGroup({
     'Events': emptyProps(),
     'Events Add': props<{ data: IEventsForm }>(),
     'Events Update': props<{ data: IProduct }>(),
-    'Events Success': props<{ data: IEventsForm }>(),
+    'Events Success': props<{ data: IProduct[] }>(),
+    'Events Select': props<{ data: IProduct }>(),
     'Events Failure': props<{ error: unknown }>(),
   }
 });
-export const EVENT_UPDATE_ACTION = createAction('Events Update',
-  props<{ payload: IProduct }>());
+// export const EVENT_UPDATE_ACTION = createAction('Events Update',
+//   props<{ payload: IProduct }>());

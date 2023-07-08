@@ -29,14 +29,37 @@ export class ConfigService {
   async create(event: IEvent): Promise<IEvent[]> {
 
     event = { ...event, ...{ id: this.data.length + 1 } };
-    
+
     this.data.push(new EventModel(event));
+
+    EVENTS.push(new EventModel(event));
 
     return await new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.data);
       }, 1000);
     });
+
+  }
+
+  updateProduct(event: IEvent): IEvent[] {
+    const data = this.data.filter(prod => {
+      if (prod.id === event.id) {
+        return prod = Object.assign(prod, {
+          ...event,
+          last_update: new Date().toLocaleString()
+        })
+      } else {
+        return prod;
+      }
+    });
+    console.log(data);
+    return data;
+    // _event = {
+    //   ...event, ...{
+    //     last_update: new Date().toLocaleString()
+    //   }
+    // };
 
   }
 

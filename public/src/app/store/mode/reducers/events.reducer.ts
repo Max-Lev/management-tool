@@ -1,19 +1,19 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { IEventsForm } from 'src/app/shared/models/events-form.model';
-import { EVENT_UPDATE_ACTION, EventsActions } from '../actions/events.actions';
+import { EventsActions } from '../actions/events.actions';
 import { IProduct } from 'src/app/modules/list-view/models/products.model';
 
 export const eventsFeatureKey = 'events';
 
 export interface EventsState {
   type: string;
-  payload: IProduct;
+  data: IProduct;
 };
 
 export const initialState: EventsState = {
   type: EventsActions.events().type,
-  payload: {
+  data: {
     name: '',
     color: '',
     description: '',
@@ -37,21 +37,24 @@ export const EventsReducer = createReducer(
   }),
   on(EventsActions.eventsUpdate, (state: EventsState, action: { data: IProduct }) => {
     const update = {
-      ...state, ...action.data, ...{
-        updatedDate: new Date().toLocaleDateString()
-      }
+      ...state, ...action, 
     };
     console.log(update);
     return update;
   }),
-  on(EventsActions.eventsSuccess, (state: EventsState, action: { data: IEventsForm }) => {
+  on(EventsActions.eventsSuccess, (state: EventsState, action: { data: IProduct[] }) => {
     return { ...state, ...action.data, };
   }),
-  on(EVENT_UPDATE_ACTION, (state: EventsState, action: { payload: IProduct }) => {
-    const update = { ...state, ...action, };
-    console.log(update)
-    return update;
-  })
+  on(EventsActions.eventsSelect, (state: EventsState, action: { data: IProduct }) => {
+    debugger;
+    return { ...state, ...action, };
+  }),
+  // on(EVENT_UPDATE_ACTION, (state: EventsState, action: { payload: IProduct }) => {
+  //   debugger;
+  //   const update = { ...state, ...action.payload, };
+  //   console.log(update)
+  //   return update;
+  // })
 );
 
 

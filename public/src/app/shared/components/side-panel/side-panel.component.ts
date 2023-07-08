@@ -7,6 +7,9 @@ import { EventsState } from 'src/app/store/mode/reducers/events.reducer';
 import { eventsStateSelector } from 'src/app/store/mode/selectors/events.selectors';
 import { ManagementState } from 'src/app/store/reducers';
 import { IEventsForm } from '../../models/events-form.model';
+import { modeStateSelector } from 'src/app/store/mode/selectors/mode.selectors';
+import { MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
+import { IProduct } from 'src/app/modules/list-view/models/products.model';
 
 @Component({
   selector: 'app-side-panel',
@@ -22,12 +25,22 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
 
   @Output() cancelEvent: EventEmitter<boolean> = new EventEmitter();
 
-  @Output() saveEvent: EventEmitter<IEventsForm> = new EventEmitter();
+  @Output() saveEvent: EventEmitter<{
+    payload: IEventsForm | IProduct,
+    action: MODE_TYPE_ENUM
+  }> = new EventEmitter();
 
+  modeState$;
+
+  actionType: MODE_TYPE_ENUM;
+
+  product: IProduct;
 
   constructor(private formBuiler: FormBuilder,
     private changeDetector: ChangeDetectorRef, private store: Store<ManagementState>) {
     this.eventsState$ = this.store.pipe(select(eventsStateSelector));
+    this.modeState$ = this.store.pipe(select(modeStateSelector));
+
   }
 
   ngOnInit(): void {
@@ -39,21 +52,22 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
     });
 
     this.eventsState$.pipe(filter((eventsState: EventsState) => {
-      return (eventsState.type === 'Events Update') ? true : false
+      return (eventsState.type === '[Event] Events Select') ? true : false
     })).subscribe((state: EventsState) => {
-      this.eventsForm.patchValue(state.payload);
+      this.product = state.data;
+      this.eventsForm.patchValue(state.data);
       this.eventsForm.updateValueAndValidity();
       this.changeDetector.detectChanges();
+    });
+
+    this.modeState$.subscribe((action: MODE_TYPE_ENUM) => {
+      this.actionType = action;
     });
 
   }
 
   ngAfterViewInit(): void {
-    this.eventsForm.valueChanges.subscribe(v => {
-      console.log(v);
-      console.log(this.eventsForm);
-    });
-    
+
   }
 
   cancel() {
@@ -61,8 +75,14 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
   }
 
   save(eventsFormValue: IEventsForm) {
-    this.saveEvent.emit(eventsFormValue)
-    // this.store.dispatch(EventsActions.eventsAdd({ data: eventsFormValue }));
+    // TODO: ADD UPDATE
+
+    if (this.actionType === MODE_TYPE_ENUM.EDIT) {
+      this.product = { ...this.product, ...eventsFormValue };
+      this.saveEvent.emit({ payload: this.product, action: this.actionType })
+    }
+    this.saveEvent.emit({ payload: eventsFormValue, action: this.actionType })
+
   }
 
 }

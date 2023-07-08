@@ -28,11 +28,24 @@ let ConfigService = class ConfigService {
     async create(event) {
         event = Object.assign(Object.assign({}, event), { id: this.data.length + 1 });
         this.data.push(new create_event_dto_1.EventModel(event));
+        events_1.EVENTS.push(new create_event_dto_1.EventModel(event));
         return await new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.data);
             }, 1000);
         });
+    }
+    updateProduct(event) {
+        const data = this.data.filter(prod => {
+            if (prod.id === event.id) {
+                return prod = Object.assign(prod, Object.assign(Object.assign({}, event), { last_update: new Date().toLocaleString() }));
+            }
+            else {
+                return prod;
+            }
+        });
+        console.log(data);
+        return data;
     }
     findAll() {
         return `This action returns all config`;

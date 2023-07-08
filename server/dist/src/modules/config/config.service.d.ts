@@ -8,6 +8,7 @@ export declare class ConfigService {
     getColumns(): Promise<Column[]>;
     getEvents(): Promise<IEvent[]>;
     create(event: IEvent): Promise<IEvent[]>;
+    updateProduct(event: IEvent): IEvent[];
     findAll(): string;
     findOne(id: number): string;
     update(id: number, updateConfigDto: UpdateConfigDto): string;

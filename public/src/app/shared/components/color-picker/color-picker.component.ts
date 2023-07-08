@@ -36,7 +36,7 @@ export class ColorPickerComponent implements ControlValueAccessor, Validator,
   }
 
   ngAfterViewInit(): void {
-    console.log(this.colorPicker)
+    
   }
 
   onChange(value: string): void { this.onChangeCallback(value); }

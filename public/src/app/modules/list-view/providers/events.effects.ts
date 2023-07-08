@@ -22,12 +22,11 @@ export class EventsEffects {
 
       exhaustMap((action: { data: IEventsForm }) => {
         return this.addEvent$(action.data).pipe(
-          map((event: IEventsForm[]) => {
-            return getProductsSuccessAction({ payload: event as unknown as IProduct[], })
+          map((event: IProduct[]) => {
+            return getProductsSuccessAction({ payload: event})
           })
         )
       }),
-
       catchError(error => EMPTY)
     ));
 
@@ -35,6 +34,25 @@ export class EventsEffects {
   addEvent$(event: IEventsForm): Observable<IEventsForm[]> {
     return this.http.post<IEventsForm[]>(environment.postEvent, event);
   }
+
+  updateEvent$(payload: IProduct): Observable<IProduct[]> {
+    return this.http.put<IProduct[]>(environment.updateEvent, payload);
+  }
+
+  eventsUpdate$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(EventsActions.eventsUpdate),
+      exhaustMap((action: { data: IProduct }) => {
+        return this.updateEvent$(action.data).pipe(
+          map((event: IProduct[]) => {
+            EventsActions.eventsSuccess({ data: event });
+            return getProductsSuccessAction({ payload: event as unknown as IProduct[], })
+          })
+        )
+      }),
+      catchError(error => EMPTY)
+    )
+  });
 
 }
 
