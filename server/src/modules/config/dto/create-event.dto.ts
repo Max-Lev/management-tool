@@ -16,6 +16,6 @@ export class EventModel implements IEvent {
         this.description = event.description;
         this.create_date = new Date().toLocaleDateString();
         this.last_update = new Date().toLocaleDateString();
-        this.create_by = 'UNKNOW';
+        this.create_by = 'ANONYMOUS';
     }
 }

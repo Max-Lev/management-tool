@@ -47,7 +47,7 @@ export class ConfigService {
       if (prod.id === event.id) {
         return prod = Object.assign(prod, {
           ...event,
-          last_update: new Date().toLocaleString()
+          last_update: new Date().toLocaleDateString()
         })
       } else {
         return prod;

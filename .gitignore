@@ -41,6 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 
+public/dist
 public/node_modules
 server/node_modules
 server/dist

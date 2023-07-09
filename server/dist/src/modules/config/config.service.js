@@ -38,7 +38,7 @@ let ConfigService = class ConfigService {
     updateProduct(event) {
         const data = this.data.filter(prod => {
             if (prod.id === event.id) {
-                return prod = Object.assign(prod, Object.assign(Object.assign({}, event), { last_update: new Date().toLocaleString() }));
+                return prod = Object.assign(prod, Object.assign(Object.assign({}, event), { last_update: new Date().toLocaleDateString() }));
             }
             else {
                 return prod;
