@@ -1,4 +1,4 @@
-const server = 'http://localhost:3000';
+const server = 'https://us-central1-management-tool-d8e1a.cloudfunctions.net/api';
 
 export const environment = {
     production: true,

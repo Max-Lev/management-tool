@@ -13,8 +13,8 @@ export let EVENTS: IEvent[] = [
         id:1,
         color: '#07fa44',
         name: 'Train stop',
-        create_date: '26/06/2023',
-        last_update: '27/06/2023',
+        create_date: '01/06/2023',
+        last_update: '17/06/2023',
         create_by: 'Max Lev',
         description: 'Train crash'
     },
@@ -22,7 +22,7 @@ export let EVENTS: IEvent[] = [
         color: '#0000ff',
         name: 'Car Accident',
         create_date: '01/01/2023',
-        last_update: '27/06/2023',
+        last_update: '23/05/2023',
         create_by: 'Max Lev',
         description: 'No damage'
     }

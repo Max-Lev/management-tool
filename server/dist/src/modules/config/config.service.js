@@ -32,7 +32,7 @@ let ConfigService = class ConfigService {
         return await new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(this.data);
-            }, 1000);
+            }, 100);
         });
     }
     updateProduct(event) {
@@ -44,7 +44,6 @@ let ConfigService = class ConfigService {
                 return prod;
             }
         });
-        console.log(data);
         return data;
     }
     findAll() {

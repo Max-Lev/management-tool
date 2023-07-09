@@ -1,5 +1,5 @@
 {
-  "name": "managment-tool",
+  "name": "management-tool",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,6 +22,7 @@
     "@ngrx/entity": "^16.0.1",
     "@ngrx/store": "^16.0.1",
     "@ngrx/store-devtools": "^16.0.1",
+    "firebase-tools": "^12.4.3",
     "primeicons": "^6.0.1",
     "primeng": "^16.0.2",
     "rxjs": "~7.6.0",
