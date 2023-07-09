@@ -40,10 +40,9 @@ export class ProductsService {
   }
 
   resolve$() {
-
     this.store.dispatch(LoadPrdoductsAction());
     this.store.dispatch(ColumnsActions.loadColumns());
-
+    
   }
 
   prods$ = createEffect(() =>
@@ -73,10 +72,6 @@ export class ProductsService {
       }),
       catchError(error => EMPTY))
   );
-
-  // updateProduct$ = createEffect(() => {
-  //   return this.actions$
-  // })
 
 
 }

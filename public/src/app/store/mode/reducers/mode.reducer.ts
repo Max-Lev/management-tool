@@ -6,12 +6,12 @@ export const modeFeatureKey = 'mode';
 
 export interface ModeState {
   type: MODE_TYPE_ENUM;
-  // payload?: IProduct;
+  payload?: any;
 }
 
 export const initialState: ModeState = {
   type: MODE_TYPE_ENUM.INITIAL,
-  // payload: undefined
+  payload: null
 };
 // export const listlState: ModeState = {
 //   type: MODE_TYPE_ENUM.LIST

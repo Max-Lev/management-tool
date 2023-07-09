@@ -7,6 +7,6 @@ export const selectModeState = (state: ManagementState) => state.modeState;
 export const modeStateSelector = createSelector(
     selectModeState,
     (state: ModeState) => {
-        return state.type;
+        return state;
     }
 );

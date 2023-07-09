@@ -32,29 +32,20 @@ export const EventsReducer = createReducer(
         updatedDate: new Date().toLocaleDateString()
       }
     };
-    console.log(add);
     return add;
   }),
   on(EventsActions.eventsUpdate, (state: EventsState, action: { data: IProduct }) => {
     const update = {
       ...state, ...action, 
     };
-    console.log(update);
     return update;
   }),
   on(EventsActions.eventsSuccess, (state: EventsState, action: { data: IProduct[] }) => {
     return { ...state, ...action.data, };
   }),
   on(EventsActions.eventsSelect, (state: EventsState, action: { data: IProduct }) => {
-    debugger;
     return { ...state, ...action, };
-  }),
-  // on(EVENT_UPDATE_ACTION, (state: EventsState, action: { payload: IProduct }) => {
-  //   debugger;
-  //   const update = { ...state, ...action.payload, };
-  //   console.log(update)
-  //   return update;
-  // })
+  })
 );
 
 

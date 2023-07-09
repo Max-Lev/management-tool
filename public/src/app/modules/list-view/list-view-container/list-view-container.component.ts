@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { IColumn, IProduct } from '../models/products.model';
-import { Observable, map } from 'rxjs';
-import { ProductsEffects } from 'src/app/store/effects/products.effects';
+import { Observable } from 'rxjs';
 import { ManagementState } from 'src/app/store/reducers';
 import { Action, Store, select } from '@ngrx/store';
 import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
 import { ProductsService } from '../providers/products.service';
 import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
-import { ADD_MODE_ACTION, CLOSE_MODE_ACTION, EDIT_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
+import { CLOSE_MODE_ACTION, EDIT_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
 import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
 import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
 import { IEventsForm } from 'src/app/shared/models/events-form.model';
 import { EventsActions } from 'src/app/store/mode/actions/events.actions';
-import { eventsStateSelector } from 'src/app/store/mode/selectors/events.selectors';
+
 
 
 @Component({
@@ -34,9 +33,12 @@ export class ListViewContainerComponent implements OnInit {
 
   sidebarVisible: boolean = false;
 
+  listView: boolean = true;
+
+  MODE_TYPE_ENUM = MODE_TYPE_ENUM;
+
   constructor(private productsService: ProductsService,
-    private store: Store<ManagementState>,
-    private configEffects: ProductsEffects) {
+    private store: Store<ManagementState>) {
     this.modeState$ = this.store.pipe(select(selectModeState));
 
   }
@@ -45,10 +47,17 @@ export class ListViewContainerComponent implements OnInit {
     this.setProducts$();
     this.toggleSideBar();
 
-    // this.store.dispatch(ADD_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.ADD } }));
-
     this.store.subscribe((state: ManagementState) => {
-      console.log('ManagementState ', state);
+      console.log('State ', state);
+    });
+
+    this.modeState$.subscribe((modeState: ModeState) => {
+      if (modeState.type === MODE_TYPE_ENUM.LIST) {
+        this.listView = true;
+      }
+      else if (modeState.type === MODE_TYPE_ENUM.TILES) {
+        this.listView = false;
+      }
     });
 
   }
@@ -73,14 +82,10 @@ export class ListViewContainerComponent implements OnInit {
     this.store.pipe(select(productsStateSelector)).subscribe((productsState: IProduct[]) => {
       this.products = [...productsState];
     });
-    // this.store.pipe(select(eventsStateSelector)).subscribe((productsState) => {
-    //   this.products = [...productsState];
-    // });
   }
 
   private setColumns$() {
     this.cols = this.store.pipe(select(columnsstateSelector));
-    // this.store.pipe(select(columnsstateSelector)).subscribe(c => this.cols = [...c]);
   }
 
   cancelEventHandler(action: boolean) {
@@ -90,7 +95,6 @@ export class ListViewContainerComponent implements OnInit {
   }
 
   saveEventHandler(event: { payload: IEventsForm | IProduct, action: MODE_TYPE_ENUM }) {
-    console.log(event);
 
     if (event.action === MODE_TYPE_ENUM.ADD) {
       this.store.dispatch(EventsActions.eventsAdd({ data: event.payload as IEventsForm }));
@@ -104,9 +108,13 @@ export class ListViewContainerComponent implements OnInit {
 
   edit(product: IProduct) {
     this.title = 'Edit event';
-    this.store.dispatch(EventsActions.eventsSelect({ data:product}));
+    // this.store.dispatch(EventsActions.eventsSelect({ data: product }));
     this.store.dispatch<Action>(EDIT_MODE_ACTION({ payload: product }));
-    
+
+  }
+
+  editEmitterHandler(product: IProduct) {
+    this.edit(product);
   }
 
 }

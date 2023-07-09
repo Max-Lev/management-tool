@@ -2,7 +2,6 @@ import { Component, ChangeDetectionStrategy, OnInit, AfterViewInit, Output, Even
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable, filter } from 'rxjs';
-import { EventsActions } from 'src/app/store/mode/actions/events.actions';
 import { EventsState } from 'src/app/store/mode/reducers/events.reducer';
 import { eventsStateSelector } from 'src/app/store/mode/selectors/events.selectors';
 import { ManagementState } from 'src/app/store/reducers';
@@ -10,6 +9,7 @@ import { IEventsForm } from '../../models/events-form.model';
 import { modeStateSelector } from 'src/app/store/mode/selectors/mode.selectors';
 import { MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
 import { IProduct } from 'src/app/modules/list-view/models/products.model';
+import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
 
 @Component({
   selector: 'app-side-panel',
@@ -46,22 +46,23 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
     this.eventsForm = this.formBuiler.group({
-      name: new FormControl<string | null>(null, [Validators.required]),
+      name: new FormControl<string | null>(null, [Validators.required,Validators.maxLength(25)]),
       color: new FormControl<string | null>(null, [Validators.required]),
       description: new FormControl<string | null>(null, { validators: [Validators.required] })
     });
-
-    this.eventsState$.pipe(filter((eventsState: EventsState) => {
-      return (eventsState.type === '[Event] Events Select') ? true : false
-    })).subscribe((state: EventsState) => {
-      this.product = state.data;
-      this.eventsForm.patchValue(state.data);
+    
+    
+    this.modeState$.pipe(filter((modeState: ModeState) => {
+      return (modeState.type === MODE_TYPE_ENUM.EDIT) ? true : false
+    })).subscribe((state: ModeState) => {
+      this.product = state?.payload;
+      this.eventsForm.patchValue(state?.payload);
       this.eventsForm.updateValueAndValidity();
       this.changeDetector.detectChanges();
     });
 
-    this.modeState$.subscribe((action: MODE_TYPE_ENUM) => {
-      this.actionType = action;
+    this.modeState$.subscribe((action) => {
+      this.actionType = action.type;
     });
 
   }
@@ -75,13 +76,12 @@ export class SidePanelComponent implements OnInit, AfterViewInit {
   }
 
   save(eventsFormValue: IEventsForm) {
-    // TODO: ADD UPDATE
 
     if (this.actionType === MODE_TYPE_ENUM.EDIT) {
       this.product = { ...this.product, ...eventsFormValue };
-      this.saveEvent.emit({ payload: this.product, action: this.actionType })
+      this.saveEvent.emit({ payload: this.product, action: this.actionType });
     }
-    this.saveEvent.emit({ payload: eventsFormValue, action: this.actionType })
+    this.saveEvent.emit({ payload: eventsFormValue, action: this.actionType });
 
   }
 

@@ -13,6 +13,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ButtonModule } from 'primeng/button';
+import { TileComponent } from './components/tile/tile.component';
 @NgModule({
   declarations: [
     SvgIconComponent,
@@ -23,6 +24,7 @@ import { ButtonModule } from 'primeng/button';
     NameInputComponent,
     ColorPickerComponent,
     DescriptionInputComponent,
+    TileComponent,
 
   ],
   imports: [
@@ -49,7 +51,8 @@ import { ButtonModule } from 'primeng/button';
     FormsModule,
     ReactiveFormsModule,
     ColorPickerModule,
-    ButtonModule
+    ButtonModule,
+    TileComponent
   ]
 })
 export class SharedModule { }

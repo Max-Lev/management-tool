@@ -1,32 +1,42 @@
-<p-table [value]="products" [tableStyle]="{'min-width': '60rem'}">
+<ng-container *ngIf="listView;else tiles">
 
-    <ng-template pTemplate="header">
-        <tr>
-            <ng-container *ngFor="let col of cols | async">
-            <!-- <ng-container *ngFor="let col of cols"> -->
-                <th pSortableColumn="{{col.field}}" style="width:20%">{{col.header}}
-                    <p-sortIcon field="{{col.field}}"></p-sortIcon>
-                </th>
-            </ng-container>
-        </tr>
-    </ng-template>
+    <p-table [value]="products" [tableStyle]="{'min-width': '60rem'}">
 
-    <ng-template pTemplate="body" let-product let-columns="columns">
-        <tr (click)="edit(product)">
-            <td *ngFor="let prod of (product | customKeyValue)">
-                <ng-container *ngIf="prod.key=='color';else colt">
-                    <div [style.background]="prod.value" style="width: 25px;height: 25px;border-radius: 5px;
-                        border: 1px solid lightgrey;">
-                    </div>
+        <ng-template pTemplate="header">
+            <tr>
+                <ng-container *ngFor="let col of cols | async">
+                    <th pSortableColumn="{{col.field}}" style="width:20%">{{col.header}}
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </th>
                 </ng-container>
-                <ng-template #colt>
-                    {{prod.value}}
-                </ng-template>
-            </td>
-        </tr>
-    </ng-template>
+            </tr>
+        </ng-template>
 
-</p-table>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+            <tr (click)="edit(product)">
+                <td *ngFor="let prod of (product | customKeyValue)">
+                    <ng-container *ngIf="prod.key=='color';else colt">
+                        <div [style.background]="prod.value" style="width: 25px;height: 25px;border-radius: 5px;
+                        border: 1px solid lightgrey;">
+                        </div>
+                    </ng-container>
+                    <ng-template #colt>
+                        {{prod.value}}
+                    </ng-template>
+                </td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</ng-container>
+
+<ng-template #tiles>
+    <section class="container">
+        <ng-container *ngFor="let prod of products">
+            <app-tile (editEmitter)="editEmitterHandler($event)" [product]="prod"></app-tile>
+        </ng-container>
+    </section>
+</ng-template>
 
 <p-sidebar [(visible)]="sidebarVisible" position="right" (onHide)="closeSideBar()">
     <ng-template pTemplate="header">
@@ -36,6 +46,4 @@
         <app-side-panel (saveEvent)="saveEventHandler($event)"
             (cancelEvent)="cancelEventHandler($event)"></app-side-panel>
     </ng-template>
-    <!-- <ng-template pTemplate="footer">Footer Content</ng-template> -->
-
 </p-sidebar>
