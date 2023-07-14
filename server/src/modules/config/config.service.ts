@@ -37,7 +37,7 @@ export class ConfigService {
     return await new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(this.data);
-      }, 100);
+      }, 0);
     });
 
   }
