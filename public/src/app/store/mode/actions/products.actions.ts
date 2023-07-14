@@ -1,4 +1,5 @@
 import { createAction, createActionGroup, emptyProps, props } from '@ngrx/store';
+import { SortEvent } from 'primeng/api';
 import { IColumn, IProduct } from 'src/app/modules/list-view/models/products.model';
 
 export const ProductsActions = createActionGroup({
@@ -19,5 +20,9 @@ export const getProductsSuccessAction = createAction(
 export const getProductsFailureAction = createAction(
   'Load Products Failure',
   props<{ payload: { error: string } }>()
+);
+export const sortProducts = createAction(
+  'Load Sort Products',
+  props<{ payload: IProduct[], sortEvent: SortEvent }>()
 );
 

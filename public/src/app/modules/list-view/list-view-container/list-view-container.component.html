@@ -1,6 +1,7 @@
 <ng-container *ngIf="listView;else tiles">
 
-    <p-table [value]="products" [tableStyle]="{'min-width': '60rem'}">
+    <!-- <p-table (onSort)="sort($event)" [value]="products" [tableStyle]="{'min-width': '60rem'}"> -->
+    <p-table [lazy]="true" (onSort)="sort($event)" [value]="products" [tableStyle]="{'min-width': '60rem'}">
 
         <ng-template pTemplate="header">
             <tr>
