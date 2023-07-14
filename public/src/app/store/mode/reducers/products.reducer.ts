@@ -13,7 +13,7 @@ export interface ProductsState {
 export const ProductsInitialState: ProductsState = {
   type: '',
   payload: []
-};
+}
 export const ProductsLoadSuccess: ProductsState = {
   type: ProductsActions.loadProducts().type,
   payload: []
@@ -26,21 +26,20 @@ export const ProductsLoadError: ProductsState = {
 export const ProductsReducer = createReducer(
   ProductsInitialState,
   on(getProductsSuccessAction, (state, action: { payload: IProduct[] }) => {
-    return { ...state, ...action }
+    if (state.sortEvent !== undefined) {
+      const data = [...sortFn(state.sortEvent, action.payload)];
+      const _state = { ...state, ...action, ...{ payload: [...data] } };
+      return _state;
+    } else {
+      return { ...state, ...action };
+    }
   }),
   on(getProductsFailureAction, (state: ProductsState, action: any) => {
     return { ...state, ...action }
   }),
   on(sortProducts, (state: ProductsState, action: { payload: IProduct[], sortEvent: SortEvent }) => {
-
     const data = [...sortFn(action.sortEvent, action.payload)];
-
-    const _state = {
-      ...state, ...action, ...{
-        payload: [...data]
-      }
-    };
-    console.log(_state);
+    const _state = { ...state, ...action, ...{ payload: [...data] } };
     return _state;
   })
 );
@@ -61,7 +60,7 @@ const sortFn = (event: SortEvent, payload: IProduct[]): IProduct[] => {
     else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
 
     const _result = event.order * result;
-    
+
     return _result;
   });
   return _payload;

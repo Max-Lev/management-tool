@@ -68,7 +68,7 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
     this.toggleSideBar();
 
     this.store.subscribe((state: ManagementState) => {
-      console.log('State ', state);
+      console.log('ManagementState ', state);
     });
 
 
@@ -102,7 +102,6 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
       }
     }, 0);
   }
-
 
   closeSideBar() {
     this.store.dispatch(CLOSE_MODE_ACTION({ payload: { modeType: MODE_TYPE_ENUM.CLOSE } }))
