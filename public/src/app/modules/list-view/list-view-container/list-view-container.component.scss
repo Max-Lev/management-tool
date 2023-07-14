@@ -1,7 +1,11 @@
 :host {
+    display: flex;
+    justify-content: center;
+    flex: 1;
 
     ::ng-deep {
         p-table {
+            width: 100%;
             .p-datatable.p-component {
                 .p-datatable-wrapper {
                     tabel {
@@ -20,9 +24,13 @@
             width: 40%;
         }
     }
+
     .container {
         display: flex;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        place-content: center;
     }
 
 }
-
