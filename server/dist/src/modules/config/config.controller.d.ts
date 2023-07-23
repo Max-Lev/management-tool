@@ -7,6 +7,10 @@ export declare class ConfigController {
     svgIcons(): Promise<import("./entities/config.entity").IconsConfig[]>;
     columns(): Promise<import("../../../db/columns").Column[]>;
     events(): Promise<IEvent[]>;
+    resolver(): Promise<{
+        products: IEvent[];
+        columns: import("../../../db/columns").Column[];
+    }>;
     create(event: IEvent): Promise<IEvent[]>;
     updateProduct(event: IEvent): IEvent[];
     findAll(): string;

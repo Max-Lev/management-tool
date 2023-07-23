@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { createReadStream } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { CreateConfigDto } from './dto/create-config.dto';
 import { UpdateConfigDto } from './dto/update-config.dto';
 import { SVG_ICONS } from 'db/svg-icons';
@@ -14,6 +14,10 @@ import { rejects } from 'assert';
 @Injectable()
 export class ConfigService {
 
+  constructor() {
+
+  }
+
   data = [...EVENTS];
 
   async getSvgIcons(): Promise<IconsConfig[]> {
@@ -23,7 +27,12 @@ export class ConfigService {
     return COLS;
   }
   async getEvents(): Promise<IEvent[]> {
-    return EVENTS;
+    return await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(EVENTS);
+      }, 0);
+    });
+    // return EVENTS;
   }
 
   async create(event: IEvent): Promise<IEvent[]> {
@@ -58,7 +67,28 @@ export class ConfigService {
 
   }
 
+  resolver(): Promise<{ products: IEvent[], columns: Column[] }> {
+    const products = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(EVENTS)
+      }, 0);
+    })
+    const columns = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(COLS)
+      }, 0);
+    })
+    return Promise.all([products, columns]).then((value: [events: IEvent[], columns: Column[]]) => {
+      
+      return {
+        products: value[0],
+        columns: value[1]
+      };
+    });
+  }
+
   findAll() {
+
     return `This action returns all config`;
   }
 

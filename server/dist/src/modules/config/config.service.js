@@ -5,6 +5,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfigService = void 0;
 const common_1 = require("@nestjs/common");
@@ -23,7 +26,11 @@ let ConfigService = class ConfigService {
         return columns_1.COLS;
     }
     async getEvents() {
-        return events_1.EVENTS;
+        return await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(events_1.EVENTS);
+            }, 0);
+        });
     }
     async create(event) {
         event = Object.assign(Object.assign({}, event), { id: this.data.length + 1 });
@@ -46,6 +53,24 @@ let ConfigService = class ConfigService {
         });
         return data;
     }
+    resolver() {
+        const products = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(events_1.EVENTS);
+            }, 0);
+        });
+        const columns = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(columns_1.COLS);
+            }, 0);
+        });
+        return Promise.all([products, columns]).then((value) => {
+            return {
+                products: value[0],
+                columns: value[1]
+            };
+        });
+    }
     findAll() {
         return `This action returns all config`;
     }
@@ -60,7 +85,8 @@ let ConfigService = class ConfigService {
     }
 };
 ConfigService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
 ], ConfigService);
 exports.ConfigService = ConfigService;
 //# sourceMappingURL=config.service.js.map

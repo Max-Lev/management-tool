@@ -29,6 +29,9 @@ let ConfigController = class ConfigController {
     events() {
         return this.configService.getEvents();
     }
+    resolver() {
+        return this.configService.resolver();
+    }
     create(event) {
         return this.configService.create(event);
     }
@@ -66,6 +69,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ConfigController.prototype, "events", null);
+__decorate([
+    (0, common_1.Get)('resolver'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], ConfigController.prototype, "resolver", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),

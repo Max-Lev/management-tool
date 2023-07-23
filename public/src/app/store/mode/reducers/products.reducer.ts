@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { ProductsActions, getProductsFailureAction, getProductsSuccessAction, LoadPrdoductsAction, sortProducts } from '../actions/products.actions';
+import { LoadPrdoductsAction, ProductsActions, getProductsFailureAction, getProductsSuccessAction, sortProducts } from '../actions/products.actions';
 import { IProduct } from 'src/app/modules/list-view/models/products.model';
 import { SortEvent } from 'primeng/api';
 export const productsFeatureKey = 'products';
@@ -11,7 +11,7 @@ export interface ProductsState {
 }
 
 export const ProductsInitialState: ProductsState = {
-  type: '',
+  type: LoadPrdoductsAction().type,
   payload: []
 }
 export const ProductsLoadSuccess: ProductsState = {

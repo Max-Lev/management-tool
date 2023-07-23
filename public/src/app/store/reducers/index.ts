@@ -11,13 +11,15 @@ import { ProductsReducer, ProductsState } from '../mode/reducers/products.reduce
 import { ColumnsReducer, ColumnsState } from '../mode/reducers/columns.reducer';
 import { EventsReducer, EventsState } from '../mode/reducers/events.reducer';
 import { SortReducer, SortState } from '../mode/reducers/sort.reducer';
+import { FilterReducer, FilterState } from '../mode/reducers/filter.reducer';
 
 export interface ManagementState {
   modeState: ModeState,
   productsState: ProductsState,
   columnsState: ColumnsState,
   eventsState: EventsState,
-  sortState: SortState
+  sortState: SortState,
+  filterState: FilterState
 }
 
 export const reducers: ActionReducerMap<ManagementState> = {
@@ -25,7 +27,8 @@ export const reducers: ActionReducerMap<ManagementState> = {
   productsState: ProductsReducer,
   columnsState: ColumnsReducer,
   eventsState: EventsReducer,
-  sortState: SortReducer
+  sortState: SortReducer,
+  filterState: FilterReducer
 };
 
 

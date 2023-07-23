@@ -21,6 +21,11 @@ export class ConfigController {
     return this.configService.getEvents();
   }
 
+  @Get('resolver')
+  resolver() {
+    return this.configService.resolver();
+  }
+
   @Post()
   create(@Body() event: IEvent) {
     return this.configService.create(event);

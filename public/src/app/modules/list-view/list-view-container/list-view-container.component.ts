@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { IColumn, IProduct } from '../models/products.model';
-import { Observable, take } from 'rxjs';
+import { Observable, map, mergeMap, of, take, tap } from 'rxjs';
 import { ManagementState } from 'src/app/store/reducers';
 import { Action, Store, select } from '@ngrx/store';
 import { productsFeatureModuel, productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
@@ -18,6 +18,7 @@ import { ProductsState } from 'src/app/store/mode/reducers/products.reducer';
 import { SortActions } from 'src/app/store/mode/actions/sort.actions';
 import { SortState } from 'src/app/store/mode/reducers/sort.reducer';
 import { sortStateSelector } from 'src/app/store/mode/selectors/sort.selectors';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -33,6 +34,7 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   title = 'New event';
 
   products: IProduct[] = [];
+  // products: Observable<IProduct[]>;
 
   cols: Observable<IColumn[]>;
 
@@ -52,8 +54,10 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
 
   tableSort = { field: '', order: 0 };
 
+
   constructor(private productsService: ProductsService,
     private changeDetector: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
     private store: Store<ManagementState>) {
     this.modeState$ = this.store.pipe(select(selectModeState));
     this.productsState$ = this.store.pipe(select(productsStateSelector));
@@ -62,16 +66,23 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    console.log(this.activatedRoute);
+    this.activatedRoute.data.subscribe(data => {
+      console.log(data);
+    })
     this.setColumns$();
     this.setProducts$();
+    // this.products = this.productsState$.pipe(map((d => ({ d }))));
+    // console.log(this.productsState$)
     this.toggleSideBar();
 
     this.store.subscribe((state: ManagementState) => {
       console.log('ManagementState ', state);
     });
 
+  }
 
+  ngAfterViewInit(): void {
     this.modeState$.subscribe((modeState: ModeState) => {
       if (modeState.type === MODE_TYPE_ENUM.LIST) {
         this.listView = true;
@@ -82,14 +93,12 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
       }
       this.changeDetector.detectChanges();
     });
-
-  }
-
-  ngAfterViewInit(): void {
-
   }
 
   setTableSortIcon() {
+    /** 
+     * timeout required for rendering
+    */
     setTimeout(() => {
       if (this.listView) {
         if (this.tableSort.field !== '') {
@@ -100,7 +109,7 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
           this.changeDetector.detectChanges();
         }
       }
-    }, 0);
+    }, 250);
   }
 
   closeSideBar() {
@@ -159,7 +168,7 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
 
   sort(event: SortEvent) {
 
-    this.store.dispatch(sortProducts({ payload: this.products as IProduct[], sortEvent: event }));
+    // this.store.dispatch(sortProducts({ payload: this.products as IProduct[], sortEvent: event }));
 
     this.tableSort = { field: event.field, order: event.order }
 

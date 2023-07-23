@@ -10,7 +10,7 @@ import { ProductsService } from './providers/products.service';
 import { StoreModule } from '@ngrx/store';
 import { ProductsReducer } from 'src/app/store/mode/reducers/products.reducer';
 import { EventsEffects } from './providers/events.effects';
-
+import { InputTextModule } from 'primeng/inputtext';
 @NgModule({
   declarations: [
     ListViewContainerComponent,
@@ -26,9 +26,9 @@ import { EventsEffects } from './providers/events.effects';
       ProductsService,
       EventsEffects
     ]),
+    InputTextModule
   ],
   providers: [
-    // ProductsService,
   ]
 })
 export class ListViewModule { }

@@ -39,10 +39,17 @@ export class ProductsService {
 
   }
 
-  resolve$() {
-    this.store.dispatch(LoadPrdoductsAction());
-    this.store.dispatch(ColumnsActions.loadColumns());
-    
+  resolve$(): Observable<{ products: IProduct[], columns: IColumn[] }> {
+    // this.store.dispatch(LoadPrdoductsAction());
+    // this.store.dispatch(ColumnsActions.loadColumns());
+    return this.httpClient.get<{ products: IProduct[], columns: IColumn[] }>(environment.resolver).pipe(
+      mergeMap((response: { products: IProduct[], columns: IColumn[] }) => {
+        console.log(response);
+        this.store.dispatch(getProductsSuccessAction({ payload: response.products }));
+        this.store.dispatch(ColumnsActions.loadColumnsSuccess({ payload: response.columns }));
+        return of(response);
+      })
+    )
   }
 
   prods$ = createEffect(() =>
