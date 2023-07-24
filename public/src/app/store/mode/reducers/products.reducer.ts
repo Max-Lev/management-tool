@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { LoadPrdoductsAction, ProductsActions, getProductsFailureAction, getProductsSuccessAction, sortProducts } from '../actions/products.actions';
+import { LoadPrdoductsAction, ProductsActions, fileterProducts, getProductsFailureAction, getProductsSuccessAction, sortProducts } from '../actions/products.actions';
 import { IProduct } from 'src/app/modules/list-view/models/products.model';
 import { SortEvent } from 'primeng/api';
 export const productsFeatureKey = 'products';
@@ -8,6 +8,8 @@ export interface ProductsState {
   type: string;
   payload: IProduct[];
   sortEvent?: SortEvent;
+  searchVal?: string;
+  copyProducts?: IProduct[];
 }
 
 export const ProductsInitialState: ProductsState = {
@@ -27,12 +29,49 @@ export const ProductsReducer = createReducer(
   ProductsInitialState,
   on(getProductsSuccessAction, (state, action: { payload: IProduct[] }) => {
     if (state.sortEvent !== undefined) {
-      const data = [...sortFn(state.sortEvent, action.payload)];
-      const _state = { ...state, ...action, ...{ payload: [...data] } };
-      return _state;
-    } else {
-      return { ...state, ...action };
+      if (state.searchVal && state.searchVal !== '') {
+        state = { ...state, ...{ copyProducts: action.payload } };
+        let _payload = [...sortFn(state.sortEvent, action.payload)];
+        _payload = search(state, { searchVal: state.searchVal }).payload;
+
+        return {
+          ...state, ...action, ...{
+            type: 'Load Filter Products',
+            payload: _payload//search(state, { searchVal: state.searchVal }).payload
+          }
+        }
+      } else {
+        const data = [...sortFn(state.sortEvent, action.payload)];
+        const _state = { ...state, ...action, ...{ payload: [...data] } };
+        return _state;
+      }
     }
+    else if (state.searchVal && state.searchVal !== '') {
+      state = { ...state, ...{ copyProducts: action.payload } };
+      return {
+        ...state, ...action, ...{
+          type: 'Load Filter Products',
+          payload: search(state, { searchVal: state.searchVal }).payload
+        }
+      }
+    }
+    else {
+      return { ...state, ...action, ...{ copyProducts: action.payload } }
+    }
+
+  }),
+  on(fileterProducts, (state: ProductsState, action: { searchVal: string }) => {
+    if (action.searchVal !== '') {
+      return search(state, action);
+    } else if (action.searchVal === '') {
+      if (state.sortEvent !== undefined) {
+        let _payload = [...sortFn(state.sortEvent, state.copyProducts)];
+        return { ...state, ...action, ...{ payload: _payload, searchVal: '' } };
+      } else {
+        return { ...state, ...action, ...{ payload: state.copyProducts, searchVal: '' } };
+      }
+    }
+    return { ...state, ...action, ...{ payload: state.copyProducts } }
   }),
   on(getProductsFailureAction, (state: ProductsState, action: any) => {
     return { ...state, ...action }
@@ -43,6 +82,21 @@ export const ProductsReducer = createReducer(
     return _state;
   })
 );
+
+const search = (state: ProductsState, action: { searchVal: string }): ProductsState => {
+  const _p = state.copyProducts.filter((prod: IProduct) => {
+    const vals: string[] = Object.values(prod);
+    const searchProducts = vals.find((val: string) =>
+      `${val}`.toLowerCase().match(action.searchVal.toLowerCase()));
+    if (searchProducts) {
+      return searchProducts;
+    } else {
+      return false;
+    }
+  });
+  const _state = { ...state, ...action, ...{ payload: _p } };
+  return _state;
+}
 
 
 const sortFn = (event: SortEvent, payload: IProduct[]): IProduct[] => {

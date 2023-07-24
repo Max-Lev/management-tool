@@ -1,49 +1,52 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { InputText } from 'primeng/inputtext';
-import { debounceTime, distinctUntilChanged, fromEvent, mergeMap, of, switchMap, tap } from 'rxjs';
+import { Observable, debounceTime, distinctUntilChanged, fromEvent, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { LoadPrdoductsAction, fileterProducts } from 'src/app/store/mode/actions/products.actions';
+import { ProductsState } from 'src/app/store/mode/reducers/products.reducer';
+import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
+import { ManagementState } from 'src/app/store/reducers';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent {
+export class SearchComponent implements AfterViewInit, OnInit {
 
   @ViewChild('search') search: ElementRef;
-  // @ViewChild('search', {static: true}) search: ElementRef;
 
   searchVal: string;
-  constructor() {
 
+  productsState$: Observable<ProductsState>;
+
+  constructor(private store: Store<ManagementState>) {
+    this.productsState$ = this.store.pipe(select(productsStateSelector));
+  }
+
+  ngOnInit(): void {
+    this.productsState$.subscribe((state:ProductsState)=>{
+      this.searchVal = state.searchVal;
+    })
+  }
+
+  ngAfterViewInit(): void {
+
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(debounceTime(1250))
+      .pipe(map(() => this.search.nativeElement.value))
+      .subscribe((data: string) => {
+        
+        // if (data === '') {
+        //   this.store.dispatch(LoadPrdoductsAction());
+        // } else {
+          this.store.dispatch(fileterProducts({ searchVal: data }));
+        // }
+      });
   }
 
 
   keyUp(searchVal: string) {
-    
-    fromEvent(this.search.nativeElement, 'keyup')
-      // of(searchVal)
-      .pipe(debounceTime(1000)).pipe(
-        distinctUntilChanged(),
-        mergeMap((val) => {
-          return of(val);
-        })
-      ).subscribe(data => {
-        console.log(this.search.nativeElement.value)
-        console.log(data)
-      })
-
-      // fromEvent(this.search.nativeElement,'keyup')
-      // .pipe(
-      //     // filter(Boolean),
-      //     debounceTime(1500),
-      //     distinctUntilChanged(),
-      //     tap((event:KeyboardEvent) => {
-      //       console.log(event)
-      //       console.log(this.search.nativeElement.value)
-      //     })
-      // ).subscribe(d=>{
-      //   console.log(d);
-      // })
 
   }
 

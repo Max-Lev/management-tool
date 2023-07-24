@@ -1,24 +1,23 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { IColumn, IProduct } from '../models/products.model';
-import { Observable, map, mergeMap, of, take, tap } from 'rxjs';
-import { ManagementState } from 'src/app/store/reducers';
-import { Action, Store, select } from '@ngrx/store';
-import { productsFeatureModuel, productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
-import { ProductsService } from '../providers/products.service';
-import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
-import { CLOSE_MODE_ACTION, EDIT_MODE_ACTION, MODE_TYPE_ENUM } from 'src/app/store/mode/actions/mode.actions';
-import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
-import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
+import { Component, ChangeDetectionStrategy, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Store, select, Action } from '@ngrx/store';
+import { SortEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { Observable } from 'rxjs';
 import { IEventsForm } from 'src/app/shared/models/events-form.model';
 import { EventsActions } from 'src/app/store/mode/actions/events.actions';
-import { SortEvent } from 'primeng/api';
-import { sortProducts } from 'src/app/store/mode/actions/products.actions';
-import { Table } from 'primeng/table';
+import { MODE_TYPE_ENUM, CLOSE_MODE_ACTION, EDIT_MODE_ACTION } from 'src/app/store/mode/actions/mode.actions';
+import { ModeState } from 'src/app/store/mode/reducers/mode.reducer';
 import { ProductsState } from 'src/app/store/mode/reducers/products.reducer';
-import { SortActions } from 'src/app/store/mode/actions/sort.actions';
 import { SortState } from 'src/app/store/mode/reducers/sort.reducer';
+import { columnsstateSelector } from 'src/app/store/mode/selectors/columns.selectors';
+import { selectModeState } from 'src/app/store/mode/selectors/mode.selectors';
+import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
 import { sortStateSelector } from 'src/app/store/mode/selectors/sort.selectors';
-import { ActivatedRoute } from '@angular/router';
+import { ManagementState } from 'src/app/store/reducers';
+import { IProduct, IColumn } from '../models/products.model';
+import { ProductsService } from '../providers/products.service';
+import { LoadPrdoductsAction, sortProducts } from 'src/app/store/mode/actions/products.actions';
 
 
 
@@ -34,7 +33,6 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   title = 'New event';
 
   products: IProduct[] = [];
-  // products: Observable<IProduct[]>;
 
   cols: Observable<IColumn[]>;
 
@@ -66,23 +64,22 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute);
-    this.activatedRoute.data.subscribe(data => {
-      console.log(data);
-    })
+    
     this.setColumns$();
     this.setProducts$();
-    // this.products = this.productsState$.pipe(map((d => ({ d }))));
-    // console.log(this.productsState$)
     this.toggleSideBar();
 
     this.store.subscribe((state: ManagementState) => {
-      console.log('ManagementState ', state);
+      console.log('App State ', state);
     });
 
   }
 
   ngAfterViewInit(): void {
+    this.setModeState$();
+  }
+
+  setModeState$(): void {
     this.modeState$.subscribe((modeState: ModeState) => {
       if (modeState.type === MODE_TYPE_ENUM.LIST) {
         this.listView = true;
@@ -159,7 +156,6 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   edit(product: IProduct) {
     this.title = 'Edit event';
     this.store.dispatch<Action>(EDIT_MODE_ACTION({ payload: product }));
-
   }
 
   editEmitterHandler(product: IProduct) {
@@ -167,11 +163,8 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   }
 
   sort(event: SortEvent) {
-
-    // this.store.dispatch(sortProducts({ payload: this.products as IProduct[], sortEvent: event }));
-
     this.tableSort = { field: event.field, order: event.order }
-
+    this.store.dispatch(sortProducts({ payload: this.products as IProduct[], sortEvent: event }));
     this.changeDetector.detectChanges();
   }
 

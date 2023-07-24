@@ -25,4 +25,8 @@ export const sortProducts = createAction(
   'Load Sort Products',
   props<{ payload: IProduct[], sortEvent: SortEvent }>()
 );
+export const fileterProducts = createAction(
+  'Load Filter Products',
+  props<{ searchVal: string }>()
+);
 

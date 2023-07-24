@@ -9,8 +9,7 @@ export const SortActions = createActionGroup({
       payload:
       {
         field: string,
-        order: number,
-        // products: IProduct[]
+        order: number
       }
     }>()
   }

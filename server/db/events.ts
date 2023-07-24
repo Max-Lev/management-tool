@@ -11,15 +11,15 @@ export interface IEvent {
 export let EVENTS: IEvent[] = [
     {
         id:1,
-        color: '#07fa44',
+        color: '#0a0a0a',
         name: 'Train stop',
         create_date: '01/06/2023',
         last_update: '17/06/2023',
         create_by: 'Max Lev',
-        description: 'Train crash'
+        description: 'Train Junction'
     },
     {   id:2,
-        color: '#0000ff',
+        color: '#ff0000',
         name: 'Car Accident',
         create_date: '01/01/2023',
         last_update: '23/05/2023',
