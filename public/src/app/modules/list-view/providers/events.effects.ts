@@ -22,8 +22,8 @@ export class EventsEffects {
 
       exhaustMap((action: { data: IEventsForm }) => {
         return this.addEvent$(action.data).pipe(
-          map((event: IProduct[]) => {
-            return getProductsSuccessAction({ payload: event})
+          map((event: { data: IProduct[], message: string }) => {
+            return getProductsSuccessAction({ payload: event.data })
           })
         )
       }),
@@ -31,12 +31,12 @@ export class EventsEffects {
     ));
 
 
-  addEvent$(event: IEventsForm): Observable<IEventsForm[]> {
-    return this.http.post<IEventsForm[]>(environment.postEvent, event);
+  addEvent$(event: IEventsForm): Observable<{ data: IProduct[], message: string }> {
+    return this.http.post<{ data: IProduct[], message: string }>(environment.postEvent, event);
   }
 
-  updateEvent$(payload: IProduct): Observable<IProduct[]> {
-    return this.http.put<IProduct[]>(environment.updateEvent, payload);
+  updateEvent$(payload: IProduct): Observable<{ data: IProduct[], message: string }> {
+    return this.http.put<{ data: IProduct[], message: string }>(environment.updateEvent, payload);
   }
 
   eventsUpdate$ = createEffect(() => {
@@ -44,9 +44,9 @@ export class EventsEffects {
       ofType(EventsActions.eventsUpdate),
       exhaustMap((action: { data: IProduct }) => {
         return this.updateEvent$(action.data).pipe(
-          map((event: IProduct[]) => {
-            EventsActions.eventsSuccess({ data: event });
-            return getProductsSuccessAction({ payload: event as unknown as IProduct[], })
+          map((event: { data: IProduct[], message: string }) => {
+            EventsActions.eventsSuccess({ data: event.data });
+            return getProductsSuccessAction({ payload: event.data as unknown as IProduct[], })
           })
         )
       }),

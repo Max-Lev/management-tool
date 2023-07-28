@@ -7,10 +7,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EffectsModule } from '@ngrx/effects';
 
 import { ProductsService } from './providers/products.service';
-import { StoreModule } from '@ngrx/store';
-import { ProductsReducer } from 'src/app/store/mode/reducers/products.reducer';
-import { EventsEffects } from './providers/events.effects';
 import { InputTextModule } from 'primeng/inputtext';
+import { EventsEffects } from './providers/events.effects';
 @NgModule({
   declarations: [
     ListViewContainerComponent,
@@ -20,9 +18,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ListViewRoutingModule,
     TableModule,
     SharedModule,
-    StoreModule.forFeature('productsReducer', { ProductsReducer }),
+    // StoreModule.forFeature('productsReducer', { ProductsReducer }),
     EffectsModule.forFeature([
-      // ProductsEffects,
       ProductsService,
       EventsEffects
     ]),

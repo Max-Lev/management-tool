@@ -20,7 +20,10 @@ let ConfigService = class ConfigService {
         this.data = [...events_1.EVENTS];
     }
     async getSvgIcons() {
-        return svg_icons_1.SVG_ICONS;
+        return {
+            icons: svg_icons_1.SVG_ICONS,
+            message: 'Load Icons',
+        };
     }
     async getColumns() {
         return columns_1.COLS;
@@ -38,7 +41,10 @@ let ConfigService = class ConfigService {
         events_1.EVENTS.push(new create_event_dto_1.EventModel(event));
         return await new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(this.data);
+                resolve({
+                    data: this.data,
+                    message: 'Create Event'
+                });
             }, 0);
         });
     }
@@ -51,9 +57,12 @@ let ConfigService = class ConfigService {
                 return prod;
             }
         });
-        return data;
+        return {
+            data: data,
+            message: 'Update Event'
+        };
     }
-    resolver() {
+    async resolver() {
         const products = new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(events_1.EVENTS);
@@ -66,9 +75,13 @@ let ConfigService = class ConfigService {
         });
         return Promise.all([products, columns]).then((value) => {
             return {
+                message: 'Resolve Data',
                 products: value[0],
                 columns: value[1]
             };
+        })
+            .catch((reason) => {
+            throw reason;
         });
     }
     findAll() {

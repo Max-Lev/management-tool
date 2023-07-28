@@ -73,8 +73,9 @@ export const ProductsReducer = createReducer(
     }
     return { ...state, ...action, ...{ payload: state.copyProducts } }
   }),
-  on(getProductsFailureAction, (state: ProductsState, action: any) => {
-    return { ...state, ...action }
+  on(getProductsFailureAction, (state: ProductsState, action: { payload: any }) => {
+    const _state = { ...state, ...action, type: 'Load Products Failure' };
+    return _state;
   }),
   on(sortProducts, (state: ProductsState, action: { payload: IProduct[], sortEvent: SortEvent }) => {
     const data = [...sortFn(action.sortEvent, action.payload)];

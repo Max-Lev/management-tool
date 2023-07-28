@@ -17,7 +17,7 @@ import { sortStateSelector } from 'src/app/store/mode/selectors/sort.selectors';
 import { ManagementState } from 'src/app/store/reducers';
 import { IProduct, IColumn } from '../models/products.model';
 import { ProductsService } from '../providers/products.service';
-import { LoadPrdoductsAction, sortProducts } from 'src/app/store/mode/actions/products.actions';
+import { sortProducts } from 'src/app/store/mode/actions/products.actions';
 
 
 
@@ -64,13 +64,13 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    
+
     this.setColumns$();
     this.setProducts$();
     this.toggleSideBar();
 
     this.store.subscribe((state: ManagementState) => {
-      console.log('App State ', state);
+      // console.log('App State ', state);
     });
 
   }
@@ -125,9 +125,15 @@ export class ListViewContainerComponent implements OnInit, AfterViewInit {
   }
 
   private setProducts$() {
-    this.productsState$.subscribe((productsState: ProductsState) => {
-      this.products = [...productsState.payload];
-      this.changeDetector.detectChanges();
+
+    this.productsState$.subscribe({
+      next: (productsState: ProductsState) => {
+        this.products = [...productsState?.payload || []];
+        this.changeDetector.detectChanges();
+      },
+      error: (err) => {
+        console.log('err ', err)
+      }
     });
   }
 

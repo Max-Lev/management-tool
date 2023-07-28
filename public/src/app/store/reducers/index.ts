@@ -12,6 +12,7 @@ import { ColumnsReducer, ColumnsState } from '../mode/reducers/columns.reducer';
 import { EventsReducer, EventsState } from '../mode/reducers/events.reducer';
 import { SortReducer, SortState } from '../mode/reducers/sort.reducer';
 import { FilterReducer, FilterState } from '../mode/reducers/filter.reducer';
+import { NotificationReducer, NotificationState } from '../mode/reducers/notification.reducer';
 
 export interface ManagementState {
   modeState: ModeState,
@@ -19,7 +20,8 @@ export interface ManagementState {
   columnsState: ColumnsState,
   eventsState: EventsState,
   sortState: SortState,
-  filterState: FilterState
+  filterState: FilterState,
+  notificationState:NotificationState
 }
 
 export const reducers: ActionReducerMap<ManagementState> = {
@@ -28,7 +30,8 @@ export const reducers: ActionReducerMap<ManagementState> = {
   columnsState: ColumnsReducer,
   eventsState: EventsReducer,
   sortState: SortReducer,
-  filterState: FilterReducer
+  filterState: FilterReducer,
+  notificationState:NotificationReducer
 };
 
 

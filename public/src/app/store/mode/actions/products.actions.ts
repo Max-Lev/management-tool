@@ -19,7 +19,7 @@ export const getProductsSuccessAction = createAction(
 
 export const getProductsFailureAction = createAction(
   'Load Products Failure',
-  props<{ payload: { error: string } }>()
+  props<{ payload: any }>()
 );
 export const sortProducts = createAction(
   'Load Sort Products',

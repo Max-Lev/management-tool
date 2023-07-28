@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { Store, select } from '@ngrx/store';
 import { InputText } from 'primeng/inputtext';
 import { Observable, debounceTime, distinctUntilChanged, fromEvent, map, mergeMap, of, switchMap, tap } from 'rxjs';
-import { LoadPrdoductsAction, fileterProducts } from 'src/app/store/mode/actions/products.actions';
+import { fileterProducts } from 'src/app/store/mode/actions/products.actions';
 import { ProductsState } from 'src/app/store/mode/reducers/products.reducer';
 import { productsStateSelector } from 'src/app/store/mode/selectors/products.selectors';
 import { ManagementState } from 'src/app/store/reducers';

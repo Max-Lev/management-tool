@@ -25,7 +25,8 @@ export class TitleComponent {
 
   ngOnInit(): void {
 
-    this.svgIcons$ = this.configService.getIconsConfig$().pipe(map((data: IconsConfig[]) => data));
+    this.svgIcons$ = this.configService.getIconsConfig$().pipe(
+      map((data: {icons:IconsConfig[],message:string}) => data.icons));
     
   }
 

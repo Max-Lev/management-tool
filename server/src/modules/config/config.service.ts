@@ -11,6 +11,17 @@ import { IEvent, EVENTS } from 'db/events';
 import { EventModel } from './dto/create-event.dto';
 import { rejects } from 'assert';
 
+export interface SuccessResponse {
+  status: string,
+  code: number,
+  message: string
+  data: object | Array<any> | any,
+  request: {
+    url: string,
+    method: string
+  }
+}
+
 @Injectable()
 export class ConfigService {
 
@@ -20,8 +31,11 @@ export class ConfigService {
 
   data = [...EVENTS];
 
-  async getSvgIcons(): Promise<IconsConfig[]> {
-    return SVG_ICONS;
+  async getSvgIcons(): Promise<{ icons: IconsConfig[], message: any }> {
+    return {
+      icons: SVG_ICONS,
+      message: 'Load Icons',
+    };
   }
   async getColumns(): Promise<Column[]> {
     return COLS;
@@ -35,7 +49,7 @@ export class ConfigService {
     // return EVENTS;
   }
 
-  async create(event: IEvent): Promise<IEvent[]> {
+  async create(event: IEvent): Promise<{ data: IEvent[], message: string }> {
 
     event = { ...event, ...{ id: this.data.length + 1 } };
 
@@ -45,46 +59,58 @@ export class ConfigService {
 
     return await new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve(this.data);
+        resolve({
+          data: this.data,
+          message: 'Create Event'
+        });
       }, 0);
     });
 
   }
 
-  updateProduct(event: IEvent): IEvent[] {
+  updateProduct(event: IEvent): { data: IEvent[], message: string } {
     const data = this.data.filter(prod => {
       if (prod.id === event.id) {
         return prod = Object.assign(prod, {
           ...event,
-          last_update: new Date().toLocaleDateString()
+          last_update: new Date().toLocaleDateString(),
         })
       } else {
         return prod;
       }
     });
 
-    return data;
+    return {
+      data: data,
+      message: 'Update Event'
+    };
 
   }
 
-  resolver(): Promise<{ products: IEvent[], columns: Column[] }> {
+  async resolver(): Promise<{ products: IEvent[], columns: Column[] }> {
     const products = new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(EVENTS)
+        // reject({ errorCode: 500, message: 'Error' });
       }, 0);
     })
     const columns = new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(COLS)
+        // reject({ errorCode: 500, message: 'Error' });
       }, 0);
     })
     return Promise.all([products, columns]).then((value: [events: IEvent[], columns: Column[]]) => {
-      
+
       return {
+        message: 'Resolve Data',
         products: value[0],
         columns: value[1]
       };
-    });
+    })
+      .catch((reason) => {
+        throw reason;
+      });
   }
 
   findAll() {

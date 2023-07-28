@@ -13,11 +13,17 @@ import { EffectsModule } from '@ngrx/effects';
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { AppInterceptor } from './app.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastModule } from 'primeng/toast';
+import { NotificationsService } from './notifications.service';
+import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    ToastModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -33,8 +39,14 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     provideFirebaseApp(() => initializeApp()),
     provideFirestore(() => getFirestore()),
     StoreRouterConnectingModule.forRoot(),
+    EffectsModule.forFeature([NotificationsService]),
   ],
-  providers: [],
+  providers: [
+    MessageService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AppInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

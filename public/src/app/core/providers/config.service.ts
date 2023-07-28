@@ -14,8 +14,8 @@ export class ConfigService {
 
   }
 
-  getIconsConfig$(): Observable<IconsConfig[]> {
-    return this.httpClient.get<IconsConfig[]>(environment.iconsConfig)
+  getIconsConfig$(): Observable<{ icons: IconsConfig[], message: string }> {
+    return this.httpClient.get<{ icons: IconsConfig[], message: string }>(environment.iconsConfig)
   }
 
 }
